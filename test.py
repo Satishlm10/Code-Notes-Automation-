@@ -38,8 +38,8 @@ class CodeNotes_Test(unittest.TestCase):
         except AssertionError as e:
             print("Test Failed - User cannot sign up with valid credentials")
         
-    # def test_view_a_code_snippet(self):
-    #     self.code_snippet_card.click_view_Link()
+    def test_view_a_code_snippet(self):
+        self.code_snippet_card.click_view_Link()
         
         
     def tearDown(self):

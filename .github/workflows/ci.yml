@@ -1,7 +1,7 @@
 name: My actions have consequence
 on: [push]
 jobs:
-  ega:
+  code-notes-selenium-test-automation:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
