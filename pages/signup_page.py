@@ -11,10 +11,23 @@ class SignUp_Page:
         self.wait = WebDriverWait(driver,5)
         
     def click_signUp_Btn(self):
-        self.wait.until(EC.presence_of_element_located(Locators.SIGN_UP_BTN)).click()
+        sign_up_btn = self.wait.until(EC.presence_of_element_located(Locators.SIGN_UP_BTN))
+        self.driver.execute_script('arguments[0].click();', sign_up_btn)
         
     def enter_valid_signup_credentials(self,email,password,confirmPassword):
-        self.wait.until(EC.presence_of_element_located(Locators.INPUT_EMAIL_SIGNUP)).send_keys(email)
-        self.wait.until(EC.presence_of_element_located(Locators.INPUT_PASSWORD_LOGIN)).send_keys(password)
-        self.wait.until(EC.presence_of_element_located(Locators.INPUT_CONFIRM_PASSWORD_SIGNUP)).send_keys(confirmPassword)
+        send_email = self.wait.until(EC.presence_of_element_located(Locators.INPUT_EMAIL_SIGNUP))
+        self.driver.execute_script("arguments[0].value = arguments[1];", send_email, email)
+        
+        send_password = self.wait.until(EC.presence_of_element_located(Locators.INPUT_PASSWORD_LOGIN))
+        self.driver.execute_script("arguments[0].value = arguments[1];", send_password, password)
+
+        send_confirm_password = self.wait.until(EC.presence_of_element_located(Locators.INPUT_CONFIRM_PASSWORD_SIGNUP))
+        self.driver.execute_script("arguments[0].value = arguments[1];", send_confirm_password, confirmPassword)
+        
+    def get_successful_login_msg(self):
+        signup_success = self.wait.until(EC.presence_of_element_located(Locators.SUCCESSFUL_SIGNUP_MSG))
+        text = self.driver.execute_script("return arguments[0].textContent;", signup_success)
+        return text
+
+
 

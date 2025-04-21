@@ -9,7 +9,8 @@ class Navigation_Bar_Page:
         self.wait = WebDriverWait(driver,5)
         
     def click_signUp_Link(self):
-        self.wait.until(EC.presence_of_element_located(Locators.SIGN_UP)).click()
+        sign_up_link = self.wait.until(EC.presence_of_element_located(Locators.SIGN_UP))
+        self.driver.execute_script('arguments[0].click();', sign_up_link)
         
    
 

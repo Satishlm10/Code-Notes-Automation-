@@ -40,7 +40,7 @@ class Locators:
     SIGN_IN_LINK = (By.XPATH,'//a[contains(text(),"Sign in")]')
     VALIDATION = (By.CSS_SELECTOR,'div.bg-red-100.border.border-red-400.text-red-700')
     VALIDATION_ERROR_MSGS = (By.CSS_SELECTOR,'p.mt-2.text-red-500.text-sm') # this can be a single or multiple elements later it will be defined in page Object
-    
+    SUCCESSFUL_SIGNUP_MSG = (By.CSS_SELECTOR,'span.block.sm\\:inline')
     
     # login and login validation
     INPUT_EMAIL_LOGIN = (By.ID,'user_email')
