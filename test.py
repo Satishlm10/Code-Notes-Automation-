@@ -12,11 +12,11 @@ from selenium.webdriver.chrome.options import Options
 class CodeNotes_Test(unittest.TestCase):
     
     def setUp(self):
-        # chrome_options = Options()
-        # chrome_options.add_argument("--headless")
-        # self.driver = webdriver.Chrome(options=chrome_options)
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        self.driver = webdriver.Chrome(options=chrome_options)
 
-        self.driver = webdriver.Chrome()
+        # self.driver = webdriver.Chrome()
         
         self.driver.maximize_window()
         self.wait = WebDriverWait(self.driver, 10)
