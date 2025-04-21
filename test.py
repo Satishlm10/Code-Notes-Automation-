@@ -29,7 +29,7 @@ class CodeNotes_Test(unittest.TestCase):
     def test_signUp_with_valid_credentials(self):
         expected_result = 'Welcome! You have signed up successfully.'
         self.navigation_page.click_signUp_Link()
-        self.signUp_page.enter_valid_signup_credentials("test@test1.com","Test@123","Test@123")
+        self.signUp_page.enter_valid_signup_credentials("test@test2.com","Test@123","Test@123")
         self.signUp_page.click_signUp_Btn()
         actual_result = self.signUp_page.get_successful_login_msg()
         try:
