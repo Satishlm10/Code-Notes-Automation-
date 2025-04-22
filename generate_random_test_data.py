@@ -2,7 +2,7 @@ import random
 import string
 import json
 
-
+# generating random email for valid user email signup 
 def generate_random_email(domain="example.com"):
     random_string = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
     return f"{random_string}@{domain}"

@@ -17,6 +17,8 @@ def setUp():
     chrome_options = Options()
     chrome_options.add_argument("--headless")  # Headless mode for no UI
     driver = webdriver.Chrome(options=chrome_options)
+    
+    # driver = webdriver.Chrome()
     driver.maximize_window()
     wait = WebDriverWait(driver, 10)
     driver.get("https://ns-code-snippet-9eae23357ebe.herokuapp.com/")
@@ -48,7 +50,7 @@ def test_signUp_with_valid_credentials(setUp):
     expected_result = 'Welcome! You have signed up successfully.'
     
     navigation_page.click_signUp_Link()
-    signUp_page.enter_valid_signup_credentials(username,password,confirmPassword)
+    signUp_page.enter_signup_credentials(username,password,confirmPassword)
     signUp_page.click_signUp_Btn()
     actual_result = signUp_page.get_successful_login_msg()
     try:
@@ -60,9 +62,50 @@ def test_signUp_with_valid_credentials(setUp):
     except Exception as e:
         print(f"Test Failed - Unexpected Error: {str.e}")
     
-# def test_view_a_code_snippet(self):
-#     self.code_snippet_card.click_view_Link()
+def test_signUp_with_empty_credentials(setUp):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    signUp_page: SignUp_Page = setUp['signUp_page']
     
+    expected_result = "Please review the problems below:"
     
+    navigation_page.click_signUp_Link()
+    signUp_page.enter_signup_credentials("","","")
+    signUp_page.click_signUp_Btn()
+    
+    actual_result = signUp_page.get_validation_error_signUp()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with empty credetials")
+    
+def test_signUp_with_empty_email(setUp):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    signUp_page: SignUp_Page = setUp['signUp_page']
+    password = data["valid_user_signup"]["password"]
+    confirmPassword = data["valid_user_signup"]["confirmPassword"]
+    
+    expected_result = "Email can't be blank"
+    
+    navigation_page.click_signUp_Link()
+    signUp_page.enter_signup_credentials("",password,confirmPassword)
+    signUp_page.click_signUp_Btn()
+    
+    actual_result = signUp_page.get_field_validation_error_msg_signUp()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with empty email")
  
-        
+def test_signUp_with_empty_password(setUp):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    signUp_page: SignUp_Page = setUp['signUp_page']
+    email = data["valid_user_signup"]["email"]
+    
+    expected_result = "Password can't be blank"
+    
+    navigation_page.click_signUp_Link()
+    signUp_page.enter_signup_credentials(email,"","")
+    signUp_page.click_signUp_Btn()
+    
+    actual_result = signUp_page.get_field_validation_error_msg_signUp()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with empty password")       
