@@ -4,6 +4,7 @@ import pytest
 from pages.signup_page import SignUp_Page
 from pages.navigation_bar_page import Navigation_Bar_Page
 from pages.code_snippet_card_page import Code_Snippet_Card_Page
+from pages.login_page import Login_Page
 from selenium.common.exceptions import TimeoutException
 import json
 
@@ -28,6 +29,7 @@ def setUp():
     signUp_page = SignUp_Page(driver)
     navigation_page = Navigation_Bar_Page(driver)
     code_snippet_card = Code_Snippet_Card_Page(driver)
+    login_page = Login_Page(driver)
     
    
     yield {
@@ -35,7 +37,8 @@ def setUp():
         "wait": wait,
         "signUp_page": signUp_page,
         "navigation_page": navigation_page,
-        "code_snippet_card": code_snippet_card
+        "code_snippet_card": code_snippet_card,
+        "login_page": login_page
     }
     
     driver.quit()
@@ -254,5 +257,23 @@ def test_signUp_with_lessthansix_password(setUp,random_email):
     except AssertionError as e:
         print("Test Failed - The user is logged in with less than six characters in password")     
     
+def test_login_with_valid_credentials(setUp):
+    navigation_page: Navigation_Bar_Page = setUp['navigation_page']
+    login_page: Login_Page = setUp['login_page']
+    expected_result = "Logout"
     
+    navigation_page.click_signUp_Link()
+    email = data["valid_user_signup"]["email"]
+    password = data["valid_user_signup"]["password"]
+   
+    login_page.enter_valid_login_credentials(email,password)
+    login_page.click_signin_btn()
+    
+    actual_result = navigation_page.get_logout_text_from_nav_bar()
+    
+    try:
+        assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+        print("Test Passed: Login with valid credentials successful.") 
+    except AssertionError as e:
+        print("Test Failed - Login with valid credentials unsuccessful.")    
     
