@@ -31,6 +31,11 @@ jobs:
         run: |
           pip install selenium pytest
 
+
+      - name: Generate random email for test data
+        run: |
+          python utils/generate_random_email.py
+
       # Run the tests using pytest
       - run: |
           pytest test.py
