@@ -40,17 +40,16 @@ def setUp():
     driver.quit()
     
     
-def test_signUp_with_valid_credentials(setUp):
+def test_signUp_with_valid_credentials(setUp,random_email):
     navigation_page = setUp['navigation_page']
     signUp_page = setUp['signUp_page']
-    username = data["valid_user_signup"]["email"]
     password = data["valid_user_signup"]["password"]
     confirmPassword = data["valid_user_signup"]["confirmPassword"]
     
     expected_result = 'Welcome! You have signed up successfully.'
     
     navigation_page.click_signUp_Link()
-    signUp_page.enter_signup_credentials(username,password,confirmPassword)
+    signUp_page.enter_signup_credentials(random_email,password,password)
     signUp_page.click_signUp_Btn()
     actual_result = signUp_page.get_successful_login_msg()
     try:
@@ -86,7 +85,7 @@ def test_signUp_with_empty_email(setUp):
     expected_result = "Email can't be blank"
     
     navigation_page.click_signUp_Link()
-    signUp_page.enter_signup_credentials("",password,confirmPassword)
+    signUp_page.enter_signup_credentials("",password,password)
     signUp_page.click_signUp_Btn()
     
     actual_result = signUp_page.get_field_validation_error_msg_signUp()
@@ -94,18 +93,34 @@ def test_signUp_with_empty_email(setUp):
     assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
     print("Test Passed: Received the correct validation message when signing up with empty email")
  
-def test_signUp_with_empty_password(setUp):
+def test_signUp_with_empty_password(setUp,random_email):
     navigation_page : Navigation_Bar_Page = setUp['navigation_page']
     signUp_page: SignUp_Page = setUp['signUp_page']
-    email = data["valid_user_signup"]["email"]
     
     expected_result = "Password can't be blank"
     
     navigation_page.click_signUp_Link()
-    signUp_page.enter_signup_credentials(email,"","")
+    signUp_page.enter_signup_credentials(random_email,"","")
     signUp_page.click_signUp_Btn()
     
     actual_result = signUp_page.get_field_validation_error_msg_signUp()
     
     assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
-    print("Test Passed: Received the correct validation message when signing up with empty password")       
+    print("Test Passed: Received the correct validation message when signing up with empty password") 
+    
+def test_signUp_with_different_password_and_confirmPassword(setUp,random_email):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    signUp_page: SignUp_Page = setUp['signUp_page']
+    password = data["valid_user_signup"]["password"]
+    confirmPassword = data["valid_user_signup"]["confirmPassword"]
+    
+    expected_result = "Password confirmation doesn't match Password"
+    
+    navigation_page.click_signUp_Link()
+    signUp_page.enter_signup_credentials(random_email,password,confirmPassword)
+    signUp_page.click_signUp_Btn()
+    
+    actual_result = signUp_page.get_field_validation_error_msg_signUp()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with different password and confirm password")      

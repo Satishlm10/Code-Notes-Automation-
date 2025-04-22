@@ -2,6 +2,6 @@
     "valid_user_signup": {
         "email": "vdvnxe3cfu@example.com",
         "password": "Test@123",
-        "confirmPassword": "Test@123"
+        "confirmPassword": "Test@1234"
     }
 }
