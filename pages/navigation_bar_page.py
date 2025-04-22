@@ -16,3 +16,7 @@ class Navigation_Bar_Page:
         logout = self.wait.until(EC.presence_of_element_located(Locators.LOG_OUT))
         text = self.driver.execute_script("return arguments[0].textContent",logout)
         return text
+    
+    def click_login_link(self):
+        login_link = self.wait.until(EC.presence_of_element_located(Locators.LOGIN))
+        self.driver.execute_script('arguments[0].click();', login_link)

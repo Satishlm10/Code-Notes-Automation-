@@ -262,7 +262,7 @@ def test_login_with_valid_credentials(setUp):
     login_page: Login_Page = setUp['login_page']
     expected_result = "Logout"
     
-    navigation_page.click_signUp_Link()
+    navigation_page.click_login_link()
     email = data["valid_user_signup"]["email"]
     password = data["valid_user_signup"]["password"]
    
