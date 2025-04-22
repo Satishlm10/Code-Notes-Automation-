@@ -275,5 +275,5 @@ def test_login_with_valid_credentials(setUp):
         assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
         print("Test Passed: Login with valid credentials successful.") 
     except AssertionError as e:
-        print("Test Failed - Login with valid credentials unsuccessful.")    
+        print("Test Failed - Login with valid email and password is unsuccessful.")    
     
