@@ -4,6 +4,7 @@ import pytest
 from pages.signup_page import SignUp_Page
 from pages.navigation_bar_page import Navigation_Bar_Page
 from pages.code_snippet_card_page import Code_Snippet_Card_Page
+from selenium.common.exceptions import TimeoutException
 import json
 
 with open('test_data.json') as f:
@@ -14,11 +15,11 @@ from selenium.webdriver.chrome.options import Options
 
 @pytest.fixture(scope="function")
 def setUp():
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")  # Headless mode for no UI
-    driver = webdriver.Chrome(options=chrome_options)
+    # chrome_options = Options()
+    # chrome_options.add_argument("--headless")  # Headless mode for no UI
+    # driver = webdriver.Chrome(options=chrome_options)
     
-    # driver = webdriver.Chrome()
+    driver = webdriver.Chrome()
     driver.maximize_window()
     wait = WebDriverWait(driver, 10)
     driver.get("https://ns-code-snippet-9eae23357ebe.herokuapp.com/")
@@ -80,7 +81,6 @@ def test_signUp_with_empty_email(setUp):
     navigation_page : Navigation_Bar_Page = setUp['navigation_page']
     signUp_page: SignUp_Page = setUp['signUp_page']
     password = data["valid_user_signup"]["password"]
-    confirmPassword = data["valid_user_signup"]["confirmPassword"]
     
     expected_result = "Email can't be blank"
     
@@ -160,4 +160,83 @@ def test_signUp_with_invalid_email(setUp):
     
     assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
     print("Test Passed: Received the correct validation message when signing up with invalid email.")  
+    
+def test_signUp_with_lowercase_password(setUp,random_email):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    signUp_page: SignUp_Page = setUp['signUp_page']
+    lowercase_password = data["invalid_credentials"]["lowercase_password"]
+    
+    expected_result = "Password is too short (minimum is 6 characters)"
+    
+    navigation_page.click_signUp_Link()
+    signUp_page.enter_signup_credentials(random_email,lowercase_password,lowercase_password)
+    signUp_page.click_signUp_Btn()
+    actual_result = navigation_page.get_logout_text_from_nav_bar()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
+         
+    
+def test_signUp_with_uppercase_password(setUp,random_email):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    signUp_page: SignUp_Page = setUp['signUp_page']
+    uppercase_password = data["invalid_credentials"]["uppercase_password"]
+    
+    expected_result = "Password is too short (minimum is 6 characters)"
+    
+    navigation_page.click_signUp_Link()
+    signUp_page.enter_signup_credentials(random_email,uppercase_password,uppercase_password)
+    signUp_page.click_signUp_Btn()
+    actual_result = navigation_page.get_logout_text_from_nav_bar()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with uppercase password only.") 
+    
+    
+def test_signUp_with_numeric_password(setUp,random_email):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    signUp_page: SignUp_Page = setUp['signUp_page']
+    numeric_password = data["invalid_credentials"]["numeric_password"]
+    
+    expected_result = "Password is too short (minimum is 6 characters)"
+    
+    navigation_page.click_signUp_Link()
+    signUp_page.enter_signup_credentials(random_email,numeric_password,numeric_password)
+    signUp_page.click_signUp_Btn()
+    actual_result = navigation_page.get_logout_text_from_nav_bar()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with numeric password only.") 
+    
+def test_signUp_with_symbol_password(setUp,random_email):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    signUp_page: SignUp_Page = setUp['signUp_page']
+    symbol_password = data["invalid_credentials"]["symbol_password"]
+    
+    expected_result = "Password is too short (minimum is 6 characters)"
+    
+    navigation_page.click_signUp_Link()
+    signUp_page.enter_signup_credentials(random_email,symbol_password,symbol_password)
+    signUp_page.click_signUp_Btn()
+    actual_result = navigation_page.get_logout_text_from_nav_bar()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with symbol password only.") 
+    
+def test_signUp_with_lessthansix_password(setUp,random_email):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    signUp_page: SignUp_Page = setUp['signUp_page']
+    lessthansix_password = data["invalid_credentials"]["symbol_password"]
+    
+    expected_result = "Password is too short (minimum is 6 characters)"
+    
+    navigation_page.click_signUp_Link()
+    signUp_page.enter_signup_credentials(random_email,lessthansix_password,lessthansix_password)
+    signUp_page.click_signUp_Btn()
+    actual_result = navigation_page.get_logout_text_from_nav_bar()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with lessthansix password only.")    
+    
+    
     
