@@ -8,7 +8,7 @@ def generate_random_email(domain="example.com"):
     return f"{random_string}@{domain}"
 
 
-test_data_file = '../test_data.json'
+test_data_file = 'test_data.json'
 
 with open(test_data_file, 'r') as f:
     data = json.load(f)
