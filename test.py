@@ -26,7 +26,7 @@ def setUp():
     navigation_page = Navigation_Bar_Page(driver)
     code_snippet_card = Code_Snippet_Card_Page(driver)
     
-    # Yield the necessary objects to test functions
+   
     yield {
         "driver": driver,
         "wait": wait,
@@ -56,9 +56,9 @@ def test_signUp_with_valid_credentials(setUp):
         print("Test Pass - User Successfully signed up with valid credentials")
         
     except TimeoutError as e:
-        print(f"Test Failed - Timeout Error: {str(e)}")
+        print(f"Test Failed - Timeout Erro: {str.e}")
     except Exception as e:
-        print(f"Test Failed - Unexpected Error: {str(e)}")
+        print(f"Test Failed - Unexpected Error: {str.e}")
     
 # def test_view_a_code_snippet(self):
 #     self.code_snippet_card.click_view_Link()
