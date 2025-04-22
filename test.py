@@ -14,9 +14,9 @@ from selenium.webdriver.chrome.options import Options
 
 @pytest.fixture(scope="function")
 def setUp():
-    # chrome_options = Options()
-    # chrome_options.add_argument("--headless")  # Headless mode for no UI
-    driver = webdriver.Chrome()
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # Headless mode for no UI
+    driver = webdriver.Chrome(options=chrome_options)
     driver.maximize_window()
     wait = WebDriverWait(driver, 10)
     driver.get("https://ns-code-snippet-9eae23357ebe.herokuapp.com/")
