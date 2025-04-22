@@ -1,7 +1,15 @@
 {
     "valid_user_signup": {
-        "email": "vdvnxe3cfu@example.com",
+        "email": "test@test1.com",
         "password": "Test@123",
         "confirmPassword": "Test@1234"
+    },
+    "invalid_credentials":{
+        "email":"invalidEmail",
+        "lowercase_password":"abcedf",
+        "uppercase_password":"ABCDEF",
+        "numeric_password":"123456",
+        "symbol_password":"!@#$%^&",
+        "lessthansix_password":"aA@12"
     }
 }

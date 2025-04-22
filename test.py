@@ -14,11 +14,11 @@ from selenium.webdriver.chrome.options import Options
 
 @pytest.fixture(scope="function")
 def setUp():
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")  # Headless mode for no UI
-    driver = webdriver.Chrome(options=chrome_options)
+    # chrome_options = Options()
+    # chrome_options.add_argument("--headless")  # Headless mode for no UI
+    # driver = webdriver.Chrome(options=chrome_options)
     
-    # driver = webdriver.Chrome()
+    driver = webdriver.Chrome()
     driver.maximize_window()
     wait = WebDriverWait(driver, 10)
     driver.get("https://ns-code-snippet-9eae23357ebe.herokuapp.com/")
@@ -123,4 +123,41 @@ def test_signUp_with_different_password_and_confirmPassword(setUp,random_email):
     actual_result = signUp_page.get_field_validation_error_msg_signUp()
     
     assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
-    print("Test Passed: Received the correct validation message when signing up with different password and confirm password")      
+    print("Test Passed: Received the correct validation message when signing up with different password and confirm password")   
+    
+def test_signUp_with_already_registered_email(setUp):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    signUp_page: SignUp_Page = setUp['signUp_page']
+    email = data["valid_user_signup"]["email"]
+    password = data["valid_user_signup"]["password"]
+    
+    
+    expected_result = "Email has already been taken"
+    
+    navigation_page.click_signUp_Link()
+    signUp_page.enter_signup_credentials(email,password,password)
+    signUp_page.click_signUp_Btn()
+    
+    actual_result = signUp_page.get_field_validation_error_msg_signUp()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with aleardy registered email")  
+    
+def test_signUp_with_invalid_email(setUp):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    signUp_page: SignUp_Page = setUp['signUp_page']
+    email = data["invalid_credentials"]["email"]
+    password = data["valid_user_signup"]["password"]
+    
+    
+    expected_result = "Email is invalid"
+    
+    navigation_page.click_signUp_Link()
+    signUp_page.enter_signup_credentials(email,password,password)
+    signUp_page.click_signUp_Btn()
+    
+    actual_result = signUp_page.get_field_validation_error_msg_signUp()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with invalid email.")  
+    
