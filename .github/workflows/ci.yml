@@ -1,24 +1,39 @@
-name: My actions have consequence
+name: Code Notes Automation
 on: [push]
+
 jobs:
   code-notes-selenium-test-automation:
     runs-on: ubuntu-latest
+
     steps:
+      # Checkout the code
       - uses: actions/checkout@v4
+
+      # Set up Python environment
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13' 
+          python-version: '3.13'
+
+      # Set up ChromeDriver
       - uses: nanasess/setup-chromedriver@v2
         with:
-          # Optional: do not specify to match Chrome's version
           chromedriver-version: '135.0.7049.84'
-          # Optional: if your chrome binary name is different
-          chromeapp: chrome
+          chromeapp: chrome  # Optional: Specify chrome binary if different
+
+      # Set up Xvfb for headless display
       - run: |
           export DISPLAY=:99
           chromedriver --url-base=/wd/hub &
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
-      - name: install selenium
-        run: pip install selenium
-      - run: python test.py
+
+      # Install Selenium and Pytest
+      - name: Install dependencies
+        run: |
+          pip install selenium pytest
+
+      # Run the tests using pytest
+      - run: |
+          pytest test.py
+
+      # Optional: Notify when the job has been triggered
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
