@@ -219,7 +219,6 @@ def test_signUp_with_numeric_password(setUp,random_email):
     signUp_page.click_signUp_Btn()
     actual_result = navigation_page.get_logout_text_from_nav_bar()
     
-  
     assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
     print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
 
