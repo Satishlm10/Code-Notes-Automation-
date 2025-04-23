@@ -46,8 +46,10 @@ class Locators:
     INPUT_EMAIL_LOGIN = (By.ID,'user_email')
     INPUT_PASSWORD_LOGIN = (By.ID,'user_password')
     REMEMBER_ME = (By.XPATH,'//input[@type="checkbox" and @name="user[remember_me]"]')
-    FORGOT_PASSWORD = (By.XPATH,'//a[contains(text(),"Forgot your password?")]')
+    FORGOT_PASSWORD = (By.CSS_SELECTOR,'a[href="/users/password/new"')
     SIGN_IN_BTN = (By.XPATH,'//input[@data-disable-with]')
     SIGN_UP_LINK = (By.XPATH,'//a[contains(text(),"Sign up")]')
     VALIDATION_LOGIN = (By.CSS_SELECTOR,'span.block.sm\\:inline')
-    
+    RESET_INSTRUCTION = (By.XPATH,'//input[@data-disable-with]')
+    RESET_VALIDATION = (By.XPATH,'//input[@id="user_email"]/following-sibling::p[1]')
+    VALID_RESET_MSG = (By.XPATH,'//input[@id="user_email"]/following-sibling::p[1]')

@@ -7,6 +7,7 @@ from pages.code_snippet_card_page import Code_Snippet_Card_Page
 from pages.login_page import Login_Page
 from selenium.common.exceptions import TimeoutException
 import json
+import time
 
 with open('test_data.json') as f:
     data = json.load(f)
@@ -17,7 +18,7 @@ from selenium.webdriver.chrome.options import Options
 @pytest.fixture(scope="function")
 def setUp():
     chrome_options = Options()
-    chrome_options.add_argument("--headless")  # Headless mode for no UI
+    chrome_options.add_argument("--headless") 
     driver = webdriver.Chrome(options=chrome_options)
     
     # driver = webdriver.Chrome()
@@ -178,11 +179,11 @@ def test_signUp_with_lowercase_password(setUp,random_email):
     signUp_page.click_signUp_Btn()
     actual_result = navigation_page.get_logout_text_from_nav_bar()
     
-    try:
-        assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
-        print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
-    except AssertionError as e:
-        print("Test Failed - The user is logged in with all lowercase in password") 
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
+
+    print("Test Failed - The user is logged in with all lowercase in password") 
     
 def test_signUp_with_uppercase_password(setUp,random_email):
     navigation_page : Navigation_Bar_Page = setUp['navigation_page']
@@ -196,11 +197,11 @@ def test_signUp_with_uppercase_password(setUp,random_email):
     signUp_page.click_signUp_Btn()
     actual_result = navigation_page.get_logout_text_from_nav_bar()
     
-    try:
-        assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
-        print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
-    except AssertionError as e:
-        print("Test Failed - The user is logged in with all uppercase in password") 
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
+
+    print("Test Failed - The user is logged in with all uppercase in password") 
     
     
 def test_signUp_with_numeric_password(setUp,random_email):
@@ -215,11 +216,11 @@ def test_signUp_with_numeric_password(setUp,random_email):
     signUp_page.click_signUp_Btn()
     actual_result = navigation_page.get_logout_text_from_nav_bar()
     
-    try:
-        assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
-        print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
-    except AssertionError as e:
-        print("Test Failed - The user is logged in with all numeric in password") 
+  
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
+
+    print("Test Failed - The user is logged in with all numeric in password") 
     
 def test_signUp_with_symbol_password(setUp,random_email):
     navigation_page : Navigation_Bar_Page = setUp['navigation_page']
@@ -233,11 +234,11 @@ def test_signUp_with_symbol_password(setUp,random_email):
     signUp_page.click_signUp_Btn()
     actual_result = navigation_page.get_logout_text_from_nav_bar()
     
-    try:
-        assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
-        print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
-    except AssertionError as e:
-        print("Test Failed - The user is logged in with all symbol in password") 
+  
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
+
+    print("Test Failed - The user is logged in with all symbol in password") 
     
 def test_signUp_with_lessthansix_password(setUp,random_email):
     navigation_page : Navigation_Bar_Page = setUp['navigation_page']
@@ -251,11 +252,11 @@ def test_signUp_with_lessthansix_password(setUp,random_email):
     signUp_page.click_signUp_Btn()
     actual_result = navigation_page.get_logout_text_from_nav_bar()
     
-    try:
-        assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
-        print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
-    except AssertionError as e:
-        print("Test Failed - The user is logged in with less than six characters in password")     
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
+
+    print("Test Failed - The user is logged in with less than six characters in password")     
     
 def test_login_with_valid_credentials(setUp):
     navigation_page: Navigation_Bar_Page = setUp['navigation_page']
@@ -271,9 +272,115 @@ def test_login_with_valid_credentials(setUp):
     
     actual_result = navigation_page.get_logout_text_from_nav_bar()
     
-    try:
-        assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
-        print("Test Passed: Login with valid credentials successful.") 
-    except AssertionError as e:
-        print("Test Failed - Login with valid email and password is unsuccessful.")    
     
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Login with valid credentials successful.") 
+
+def test_login_with_invalid_email_and_valid_password(setUp):
+    navigation_page: Navigation_Bar_Page = setUp['navigation_page']
+    login_page: Login_Page = setUp['login_page']
+    expected_result = "Invalid Email or password."
+    
+    navigation_page.click_login_link()
+    email = data["invalid_credentials"]["email"]
+    password = data["valid_user_signup"]["password"]
+    
+    login_page.enter_valid_login_credentials(email,password)
+    login_page.click_signin_btn()
+    
+    actual_result = login_page.get_login_validation_error_msg()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Login with invalid email and valid password generates error.") 
+    
+def test_login_with_valid_email_and_invalid_password(setUp):
+    navigation_page: Navigation_Bar_Page = setUp['navigation_page']
+    login_page: Login_Page = setUp['login_page']
+    expected_result = "Invalid Email or password."
+    
+    navigation_page.click_login_link()
+    email = data["valid_user_signup"]["email"]
+    password = data["valid_user_signup"]["confirmPassword"]
+    
+    login_page.enter_valid_login_credentials(email,password)
+    login_page.click_signin_btn()
+    
+    actual_result = login_page.get_login_validation_error_msg()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Login with invalid email and valid password generates error.") 
+    
+
+def test_login_with_empty_credential(setUp):
+    navigation_page: Navigation_Bar_Page = setUp['navigation_page']
+    login_page: Login_Page = setUp['login_page']
+    expected_result = "Invalid Email or password."
+    
+    navigation_page.click_login_link()
+    
+    login_page.enter_valid_login_credentials("","")
+    login_page.click_signin_btn()
+    
+    actual_result = login_page.get_login_validation_error_msg()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Login with invalid email and valid password generates error.") 
+    
+def test_pasword_recovery_with_empty_email_field(setUp):
+    navigation_page: Navigation_Bar_Page = setUp['navigation_page']
+    login_page: Login_Page = setUp['login_page']
+    expected_result = "Email can't be blank"
+    
+    navigation_page.click_login_link()
+    login_page.click_forgot_password_link()
+    
+    time.sleep(1)
+    
+    login_page.enter_email_in_forgot_password_field("")
+    login_page.click_reset_instruction_btn()
+    
+    actual_result = login_page.get_reset_password_validation_error_msg()
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Password reset with empty email generate correct validation error message.") 
+    
+def test_password_recovery_with_valid_email(setUp):
+    navigation_page: Navigation_Bar_Page = setUp['navigation_page']
+    login_page: Login_Page = setUp['login_page']
+    expected_result = "You will receive an email with instructions on how to reset your password in a few minutes."
+
+    navigation_page.click_login_link()
+    login_page.click_forgot_password_link()
+    
+    time.sleep(1)  
+
+    valid_email = data["valid_user_signup"]["email"]
+    login_page.enter_email_in_forgot_password_field(valid_email)
+    login_page.click_reset_instruction_btn()
+
+    try:
+        actual_result = login_page.get_reset_password_success_msg()
+        assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+        print("Test Passed: Password reset with valid email triggered success message.")
+    except TimeoutException as e:
+        pytest.fail("Test failed because the reset email msg element is not found.")
+    except Exception as e:
+        print("Unknown Error: ",{str.e})
+
+
+def test_password_recovery_with_unregistered_email(setUp,random_email):
+    navigation_page: Navigation_Bar_Page = setUp['navigation_page']
+    login_page: Login_Page = setUp['login_page']
+    expected_result = "Email not found"  
+
+    navigation_page.click_login_link()
+    login_page.click_forgot_password_link()
+    
+    time.sleep(1)  
+
+    login_page.enter_email_in_forgot_password_field(random_email)
+    login_page.click_reset_instruction_btn()
+
+    actual_result = login_page.get_reset_password_validation_error_msg()
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Unregistered email correctly triggered validation error.")
+
