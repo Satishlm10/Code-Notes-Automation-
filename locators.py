@@ -22,7 +22,7 @@ class Locators:
     LOG_OUT = (By.XPATH,'//a[contains(text(),"Logout")]')
     
     # New code snippet
-    NEW_CODE_SNIPPET = (By.XPATH,'//a[contains(text(),"New Code Snippet")]')
+    NEW_CODE_SNIPPET = (By.CSS_SELECTOR,'a[href="/code_snippets/new"]')
     INPUT_TITLE = (By.ID,'code_snippet_title')
     INPUT_LANGUAGE = (By.ID,'code_snippet_language')
     INPUT_DESCRIPTION = (By.ID,'code_snippet_description')
@@ -47,9 +47,14 @@ class Locators:
     INPUT_PASSWORD_LOGIN = (By.ID,'user_password')
     REMEMBER_ME = (By.XPATH,'//input[@type="checkbox" and @name="user[remember_me]"]')
     FORGOT_PASSWORD = (By.CSS_SELECTOR,'a[href="/users/password/new"')
-    SIGN_IN_BTN = (By.XPATH,'//input[@data-disable-with]')
+    SIGN_IN_BTN = (By.XPATH,'//input[@type="submit" and @name="commit" and @value="Sign in"]')
     SIGN_UP_LINK = (By.XPATH,'//a[contains(text(),"Sign up")]')
     VALIDATION_LOGIN = (By.CSS_SELECTOR,'span.block.sm\\:inline')
     RESET_INSTRUCTION = (By.XPATH,'//input[@data-disable-with]')
     RESET_VALIDATION = (By.XPATH,'//input[@id="user_email"]/following-sibling::p[1]')
     VALID_RESET_MSG = (By.XPATH,'//input[@id="user_email"]/following-sibling::p[1]')
+    
+    # create, edit code snippet
+    FORM_TITLE = (By.CSS_SELECTOR,'h1.xh-highlight')
+    
+   

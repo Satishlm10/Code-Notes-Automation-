@@ -5,6 +5,7 @@ from pages.signup_page import SignUp_Page
 from pages.navigation_bar_page import Navigation_Bar_Page
 from pages.code_snippet_card_page import Code_Snippet_Card_Page
 from pages.login_page import Login_Page
+from pages.new_code_snippet_form_page import New_Code_Snippet_Page
 from selenium.common.exceptions import TimeoutException
 import json
 import time
@@ -31,6 +32,7 @@ def setUp():
     navigation_page = Navigation_Bar_Page(driver)
     code_snippet_card = Code_Snippet_Card_Page(driver)
     login_page = Login_Page(driver)
+    new_code_snippet = New_Code_Snippet_Page(driver)
     
    
     yield {
@@ -39,7 +41,8 @@ def setUp():
         "signUp_page": signUp_page,
         "navigation_page": navigation_page,
         "code_snippet_card": code_snippet_card,
-        "login_page": login_page
+        "login_page": login_page,
+        "new_code_snippet": new_code_snippet
     }
     
     driver.quit()
@@ -234,7 +237,6 @@ def test_signUp_with_symbol_password(setUp,random_email):
     signUp_page.click_signUp_Btn()
     actual_result = navigation_page.get_logout_text_from_nav_bar()
     
-  
     assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
     print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
 
@@ -266,7 +268,6 @@ def test_login_with_valid_credentials(setUp):
     navigation_page.click_login_link()
     email = data["valid_user_signup"]["email"]
     password = data["valid_user_signup"]["password"]
-   
     login_page.enter_valid_login_credentials(email,password)
     login_page.click_signin_btn()
     
@@ -384,3 +385,34 @@ def test_password_recovery_with_unregistered_email(setUp,random_email):
     assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
     print("Test Passed: Unregistered email correctly triggered validation error.")
 
+def test_guest_user_should_login_before_creating_new_code_snippet(setUp):
+    new_code_snippet: New_Code_Snippet_Page = setUp['new_code_snippet']
+    login_page : Login_Page = setUp['login_page']
+    expected_result = "You need to sign in or sign up before continuing."
+    
+    new_code_snippet.click_new_code_snippet_link()
+    actual_result = login_page.get_login_validation_error_msg()
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Guest user is redirected to login when trying to create a new code snippet.")
+    
+def test_login_user_can_create_new_code_snippet(setUp):
+    navigation_page: Navigation_Bar_Page = setUp["navigation_page"]
+    login_page: Login_Page = setUp["login_page"]
+    new_code_snippet:New_Code_Snippet_Page = setUp['new_code_snippet']
+    navigation_page.click_login_link()
+    
+    email = data["valid_user_signup"]["email"]
+    password = data["valid_user_signup"]["password"]
+
+    login_page.enter_valid_login_credentials(email,password)
+
+    login_page.click_signin_btn()
+
+    navigation_page.click_code_snippets_link()
+    new_code_snippet.click_new_code_snippet_link()
+    
+    expected_result = "New Code Snippet"
+    actual_result = new_code_snippet.get_form_title_new_code_snippet()
+    
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Logged in user can access the New Code Snippet page.")

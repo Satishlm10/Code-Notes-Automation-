@@ -20,3 +20,7 @@ class Navigation_Bar_Page:
     def click_login_link(self):
         login_link = self.wait.until(EC.presence_of_element_located(Locators.LOGIN))
         self.driver.execute_script('arguments[0].click();', login_link)
+        
+    def click_code_snippets_link(self):
+        code_snippets_link = self.wait.until(EC.presence_of_element_located(Locators.CODE_SNIPPETS))
+        self.driver.execute_script('arguments[0].click();', code_snippets_link)

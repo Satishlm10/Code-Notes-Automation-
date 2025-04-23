@@ -16,10 +16,10 @@ class Login_Page:
         
         send_password = self.wait.until(EC.presence_of_element_located(Locators.INPUT_PASSWORD_LOGIN))
         self.driver.execute_script("arguments[0].value = arguments[1];", send_password, password)     
-             
+
     def click_signin_btn(self):
         signInBtn = self.wait.until(EC.presence_of_element_located(Locators.SIGN_IN_BTN))
-        self.driver.execute_script('arguments[0].click();', signInBtn)
+        self.driver.execute_script('arguments[0].click()',signInBtn)
         
     def get_login_validation_error_msg(self):
         login_validation = self.wait.until(EC.presence_of_element_located(Locators.VALIDATION_LOGIN))
