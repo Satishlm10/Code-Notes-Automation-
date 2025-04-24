@@ -30,11 +30,11 @@ from pages.new_code_snippet_form_page import New_Code_Snippet_Page
 
 @pytest.fixture(scope="function")
 def setUp():
-    # chrome_options = Options()
-    # chrome_options.add_argument("--headless") 
-    # driver = webdriver.Chrome(options=chrome_options)
+    chrome_options = Options()
+    chrome_options.add_argument("--headless") 
+    driver = webdriver.Chrome(options=chrome_options)
     
-    driver = webdriver.Chrome()
+    # driver = webdriver.Chrome()
     driver.maximize_window()
     wait = WebDriverWait(driver, 10)
     driver.get("https://ns-code-snippet-9eae23357ebe.herokuapp.com/")
