@@ -11,5 +11,97 @@
         "numeric_password":"123456",
         "symbol_password":"!@#$%^&",
         "lessthansix_password":"aA@12"
+    },
+    "snippets": {
+        "JavaScript": {
+            "title": "My First Code Snippet",
+            "language": "JavaScript",
+            "description": "A simple JavaScript function",
+            "code": "function helloWorld() {\\n    console.log('Hello, world!');\\n}"
+        },
+        "Ruby": {
+            "title": "My First Code Snippet",
+            "language": "Ruby",
+            "description": "A simple Ruby function",
+            "code": "def hello_world\\n    puts 'Hello, world!'\\nend"
+        },
+        "Python": {
+            "title": "My First Code Snippet",
+            "language": "Python",
+            "description": "A simple Python function",
+            "code": "def hello_world():\\n    print('Hello, world!')"
+        },
+        "Java": {
+            "title": "My First Code Snippet",
+            "language": "Java",
+            "description": "A simple Java function",
+            "code": "public class HelloWorld {\\n    public static void main(String[] args) {\\n        System.out.println('Hello, world!');\\n    }\\n}"
+        },
+        "C#": {
+            "title": "My First Code Snippet",
+            "language": "C#",
+            "description": "A simple C# function",
+            "code": "using System;\\n\\nclass Program {\\n    static void Main() {\\n        Console.WriteLine('Hello, world!');\\n    }\\n}"
+        },
+        "PHP": {
+            "title": "My First Code Snippet",
+            "language": "PHP",
+            "description": "A simple PHP function",
+            "code": "<?php\\nfunction hello_world() {\\n    echo 'Hello, world!';\\n}\\n?>"
+        },
+        "Go": {
+            "title": "My First Code Snippet",
+            "language": "Go",
+            "description": "A simple Go function",
+            "code": "package main\\n\\nimport \\ \\n\\nfunc helloWorld() {\\n    fmt.Println('Hello, world!')\\n}\\n\\nfunc main() {\\n    helloWorld()\\n}"
+        },
+        "Swift": {
+            "title": "My First Code Snippet",
+            "language": "Swift",
+            "description": "A simple Swift function",
+            "code": "func helloWorld() {\\n    print('Hello, world!')\\n}\\n\\nhelloWorld()"
+        },
+        "Kotlin": {
+            "title": "My First Code Snippet",
+            "language": "Kotlin",
+            "description": "A simple Kotlin function",
+            "code": "fun helloWorld() {\\n    println('Hello, world!')\\n}\\n\\nfun main() {\\n    helloWorld()\\n}"
+        },
+        "TypeScript": {
+            "title": "My First Code Snippet",
+            "language": "TypeScript",
+            "description": "A simple TypeScript function",
+            "code": "function helloWorld(): void {\\n    console.log('Hello, world!');\\n}\\n\\nhelloWorld();"
+        },
+        "HTML": {
+            "title": "My First Code Snippet",
+            "language": "HTML",
+            "description": "A simple HTML snippet",
+            "code": "<!DOCTYPE html>\\n<html>\\n<head>\\n    <title>Hello World</title>\\n</head>\\n<body>\\n    <h1>Hello, world!</h1>\\n</body>\\n</html>"
+        },
+        "CSS": {
+            "title": "My First Code Snippet",
+            "language": "CSS",
+            "description": "A simple CSS snippet",
+            "code": "body {\\n    font-family: Arial, sans-serif;\\n}\\nh1 {\\n    color: blue;\\n}"
+        },
+        "SQL": {
+            "title": "My First Code Snippet",
+            "language": "SQL",
+            "description": "A simple SQL query",
+            "code": "SELECT 'Hello, world!';"
+        },
+        "Shell": {
+            "title": "My First Code Snippet",
+            "language": "Shell",
+            "description": "A simple shell script",
+            "code": "echo 'Hello, world!'"
+        },
+        "Other": {
+            "title": "My First Code Snippet",
+            "language": "Other",
+            "description": "A custom code snippet",
+            "code": "// Custom code"
+        }
     }
 }

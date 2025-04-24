@@ -31,6 +31,32 @@ class Locators:
     INPUT_TAGS = (By.XPATH,'//input[@type="checkbox" and @name="code_snippet[tag_ids][]"]/following-sibling::label')
     CREATE_BTN = (By.XPATH,'//input[@type="submit" and @name="commit"]')
     MANAGE_TAG_LINK = (By.XPATH,'//a[contains(text(),"Manage Tags")]')
+    SUCCESS_MSG = (By.CSS_SELECTOR,'span.block.sm\\:inline')
+
+    # Select options for languages in the dropdown
+    LANGUAGE_OPTIONS = {
+        "JavaScript": (By.XPATH, "//option[text()='JavaScript']"),
+        "Ruby": (By.XPATH, "//option[text()='Ruby']"),
+        "Python": (By.XPATH, "//option[text()='Python']"),
+        "Java": (By.XPATH, "//option[text()='Java']"),
+        "C#": (By.XPATH, "//option[text()='C#']"),
+        "PHP": (By.XPATH, "//option[text()='PHP']"),
+        "Go": (By.XPATH, "//option[text()='Go']"),
+        "Swift": (By.XPATH, "//option[text()='Swift']"),
+        "Kotlin": (By.XPATH, "//option[text()='Kotlin']"),
+        "TypeScript": (By.XPATH, "//option[text()='TypeScript']"),
+        "HTML": (By.XPATH, "//option[text()='HTML']"),
+        "CSS": (By.XPATH, "//option[text()='CSS']"),
+        "SQL": (By.XPATH, "//option[text()='SQL']"),
+        "Shell": (By.XPATH, "//option[text()='Shell']"),
+        "Other": (By.XPATH, "//option[text()='Other']")
+    }
+    
+    TAG_CHECKBOX = (By.XPATH, "//label[text()='{tag_name}']/preceding-sibling::input")
+    @staticmethod
+    def get_tag_checkbox_locator(tag_name):
+        """Returns the XPath for the tag checkbox, replacing the tag_name placeholder."""
+        return Locators.TAG_CHECKBOX[0], Locators.TAG_CHECKBOX[1].format(tag_name=tag_name)
     
     # sign up and sign up validation
     INPUT_EMAIL_SIGNUP = (By.ID,'user_email')
@@ -55,6 +81,5 @@ class Locators:
     VALID_RESET_MSG = (By.XPATH,'//input[@id="user_email"]/following-sibling::p[1]')
     
     # create, edit code snippet
-    FORM_TITLE = (By.CSS_SELECTOR,'h1.xh-highlight')
+    FORM_TITLE = (By.XPATH,'//h1[contains(text(),"New Code Snippet")]')
     
-   

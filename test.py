@@ -1,5 +1,4 @@
-from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
+
 import pytest
 from pages.signup_page import SignUp_Page
 from pages.navigation_bar_page import Navigation_Bar_Page
@@ -13,41 +12,6 @@ import time
 with open('test_data.json') as f:
     data = json.load(f)
 
-from selenium.webdriver.chrome.options import Options
-
-
-@pytest.fixture(scope="function")
-def setUp():
-    chrome_options = Options()
-    chrome_options.add_argument("--headless") 
-    driver = webdriver.Chrome(options=chrome_options)
-    
-    # driver = webdriver.Chrome()
-    driver.maximize_window()
-    wait = WebDriverWait(driver, 10)
-    driver.get("https://ns-code-snippet-9eae23357ebe.herokuapp.com/")
-    
-    # Page objects
-    signUp_page = SignUp_Page(driver)
-    navigation_page = Navigation_Bar_Page(driver)
-    code_snippet_card = Code_Snippet_Card_Page(driver)
-    login_page = Login_Page(driver)
-    new_code_snippet = New_Code_Snippet_Page(driver)
-    
-   
-    yield {
-        "driver": driver,
-        "wait": wait,
-        "signUp_page": signUp_page,
-        "navigation_page": navigation_page,
-        "code_snippet_card": code_snippet_card,
-        "login_page": login_page,
-        "new_code_snippet": new_code_snippet
-    }
-    
-    driver.quit()
-    
-    
 def test_signUp_with_valid_credentials(setUp,random_email):
     navigation_page = setUp['navigation_page']
     signUp_page = setUp['signUp_page']
@@ -394,18 +358,11 @@ def test_guest_user_should_login_before_creating_new_code_snippet(setUp):
     assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
     print("Test Passed: Guest user is redirected to login when trying to create a new code snippet.")
     
-def test_login_user_can_create_new_code_snippet(setUp):
-    navigation_page: Navigation_Bar_Page = setUp["navigation_page"]
-    login_page: Login_Page = setUp["login_page"]
-    new_code_snippet:New_Code_Snippet_Page = setUp['new_code_snippet']
-    navigation_page.click_login_link()
+def test_login_user_can_create_new_code_snippet(login_user):
+    navigation_page: Navigation_Bar_Page = login_user['navigation_page']
+    new_code_snippet: New_Code_Snippet_Page = login_user['new_code_snippet']
     
-    email = data["valid_user_signup"]["email"]
-    password = data["valid_user_signup"]["password"]
-
-    login_page.enter_valid_login_credentials(email,password)
-
-    login_page.click_signin_btn()
+    # Now the user is already logged in — no need for login code here
 
     navigation_page.click_code_snippets_link()
     new_code_snippet.click_new_code_snippet_link()
@@ -414,4 +371,123 @@ def test_login_user_can_create_new_code_snippet(setUp):
     actual_result = new_code_snippet.get_form_title_new_code_snippet()
     
     assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
-    print("Test Passed: Logged in user can access the New Code Snippet page.")
+    print("Test Passed: The logged-in user can access the New Code Snippet page.")
+
+def test_create_new_code_snippet(login_user):
+    # Extracting page objects
+    navigation_page = login_user['navigation_page']
+    new_code_snippet_page = login_user['new_code_snippet']
+    
+    # Navigate to the "New Code Snippet" page
+    navigation_page.click_code_snippets_link()
+    new_code_snippet_page.click_new_code_snippet_link()
+    
+    # Fill the form with data
+    title = data["snippets"]["JavaScript"]["title"]
+    language = data["snippets"]["JavaScript"]["language"]
+    description = data["snippets"]["JavaScript"]["description"]
+    code = data["snippets"]["JavaScript"]["code"]
+    new_code_snippet_page.input_title(title)
+    new_code_snippet_page.select_language(language)
+    new_code_snippet_page.input_description(description)
+    new_code_snippet_page.input_code(code)
+    
+    # Optionally set the snippet as private and select tags
+    new_code_snippet_page.toggle_private_checkbox(should_check=True)
+    new_code_snippet_page.select_tag("new")  # Dynamically select the tag
+    
+    # Submit the form to create the snippet
+    new_code_snippet_page.click_create_button()
+    
+    # Verify successful creation (you may want to assert the new snippet appears in the list or on the page)
+    success_message = "Code snippet was successfully created."  # Modify this with actual page assertion after creation
+    assert success_message in new_code_snippet_page.get_success_message(), f"Expected success message, but got different result."
+    
+    print("Test Passed: New Code Snippet was successfully created!")
+
+def test_required_fields_validation(login_user):
+    navigation_page = login_user['navigation_page']
+    new_code_snippet_page = login_user['new_code_snippet']
+    driver = login_user["driver"]
+    time.sleep(1)
+    navigation_page.click_code_snippets_link()
+    new_code_snippet_page.click_new_code_snippet_link()
+    # Attempt to submit without filling required fields
+    new_code_snippet_page.click_create_button()
+
+    error_elements = new_code_snippet_page.is_error_displayed()
+    error_text_arr = []
+    for error in error_elements:
+        error_text_arr.append(driver.execute_script("return arguments[0].textContent",error))
+    
+    assert "Title can't be blank" in error_text_arr
+    assert "Language can't be blank" in error_text_arr
+    assert "Code can't be blank" in error_text_arr
+    print("Test Passed: Required field validations are working as expected.")
+
+def test_missing_title_field_validation(login_user):
+    navigation_page = login_user['navigation_page']
+    new_code_snippet_page = login_user['new_code_snippet']
+    driver = login_user["driver"]
+
+    navigation_page.click_code_snippets_link()
+    new_code_snippet_page.click_new_code_snippet_link()
+
+    # Fill language and code, leave title blank
+    new_code_snippet_page.select_language("Python")
+    new_code_snippet_page.input_description("A snippet with no title.")
+    new_code_snippet_page.input_code("print('Hello, world!')")
+
+    new_code_snippet_page.click_create_button()
+
+    error_elements = new_code_snippet_page.is_error_displayed()
+    error_text_arr = [driver.execute_script("return arguments[0].textContent", e) for e in error_elements]
+
+    assert "Title can't be blank" in error_text_arr
+    print("Test Passed: Title required field validation works.")
+
+def test_missing_language_field_validation(login_user):
+    navigation_page = login_user['navigation_page']
+    new_code_snippet_page = login_user['new_code_snippet']
+    driver = login_user["driver"]
+
+    navigation_page.click_code_snippets_link()
+    new_code_snippet_page.click_new_code_snippet_link()
+
+    # Fill title and code, leave language blank
+    new_code_snippet_page.input_title("Snippet without language")
+    new_code_snippet_page.input_description("Testing missing language.")
+    new_code_snippet_page.input_code("print('No language selected')")
+
+    new_code_snippet_page.click_create_button()
+
+    error_elements = new_code_snippet_page.is_error_displayed()
+    error_text_arr = [driver.execute_script("return arguments[0].textContent", e) for e in error_elements]
+
+    assert "Language can't be blank" in error_text_arr
+    print("Test Passed: Language required field validation works.")
+
+
+def test_missing_code_field_validation(login_user):
+    navigation_page = login_user['navigation_page']
+    new_code_snippet_page = login_user['new_code_snippet']
+    driver = login_user["driver"]
+
+    navigation_page.click_code_snippets_link()
+    new_code_snippet_page.click_new_code_snippet_link()
+
+    # Fill title and language, leave code blank
+    new_code_snippet_page.input_title("Snippet without code")
+    new_code_snippet_page.select_language("JavaScript")
+    new_code_snippet_page.input_description("No code included.")
+
+    new_code_snippet_page.click_create_button()
+
+    error_elements = new_code_snippet_page.is_error_displayed()
+    error_text_arr = [driver.execute_script("return arguments[0].textContent", e) for e in error_elements]
+
+    assert "Code can't be blank" in error_text_arr
+    print("Test Passed: Code required field validation works.")
+
+    
+    
