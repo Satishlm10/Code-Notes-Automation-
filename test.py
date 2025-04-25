@@ -49,7 +49,6 @@ def test_signUp_with_empty_credentials(setUp):
     assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
     print("Test Passed: Received the correct validation message when signing up with empty credetials")
 
-    
 def test_signUp_with_empty_email(setUp):
     navigation_page : Navigation_Bar_Page = setUp['navigation_page']
     signUp_page: SignUp_Page = setUp['signUp_page']
@@ -65,7 +64,7 @@ def test_signUp_with_empty_email(setUp):
     
     assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
     print("Test Passed: Received the correct validation message when signing up with empty email")
- 
+
 def test_signUp_with_empty_password(setUp,random_email):
     navigation_page : Navigation_Bar_Page = setUp['navigation_page']
     signUp_page: SignUp_Page = setUp['signUp_page']
@@ -169,8 +168,7 @@ def test_signUp_with_uppercase_password(setUp,random_email):
     print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
 
     print("Test Failed - The user is logged in with all uppercase in password") 
-    
-    
+
 def test_signUp_with_numeric_password(setUp,random_email):
     navigation_page : Navigation_Bar_Page = setUp['navigation_page']
     signUp_page: SignUp_Page = setUp['signUp_page']
@@ -187,7 +185,7 @@ def test_signUp_with_numeric_password(setUp,random_email):
     print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
 
     print("Test Failed - The user is logged in with all numeric in password") 
-    
+
 def test_signUp_with_symbol_password(setUp,random_email):
     navigation_page : Navigation_Bar_Page = setUp['navigation_page']
     signUp_page: SignUp_Page = setUp['signUp_page']
@@ -204,7 +202,7 @@ def test_signUp_with_symbol_password(setUp,random_email):
     print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
 
     print("Test Failed - The user is logged in with all symbol in password") 
-    
+
 def test_signUp_with_lessthansix_password(setUp,random_email):
     navigation_page : Navigation_Bar_Page = setUp['navigation_page']
     signUp_page: SignUp_Page = setUp['signUp_page']
@@ -222,7 +220,7 @@ def test_signUp_with_lessthansix_password(setUp,random_email):
     print("Test Passed: Received the correct validation message when signing up with lowercase password only.") 
 
     print("Test Failed - The user is logged in with less than six characters in password")     
-    
+
 def test_login_with_valid_credentials(setUp):
     navigation_page: Navigation_Bar_Page = setUp['navigation_page']
     login_page: Login_Page = setUp['login_page']
@@ -274,7 +272,6 @@ def test_login_with_valid_email_and_invalid_password(setUp):
     assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
     print("Test Passed: Login with invalid email and valid password generates error.") 
     
-
 def test_login_with_empty_credential(setUp):
     navigation_page: Navigation_Bar_Page = setUp['navigation_page']
     login_page: Login_Page = setUp['login_page']
@@ -329,7 +326,6 @@ def test_password_recovery_with_valid_email(setUp):
         pytest.fail("Test failed because the reset email msg element is not found.")
     except Exception as e:
         print("Unknown Error: ",{str.e})
-
 
 def test_password_recovery_with_unregistered_email(setUp,random_email):
     navigation_page: Navigation_Bar_Page = setUp['navigation_page']
@@ -467,7 +463,6 @@ def test_missing_language_field_validation(login_user):
     assert "Language can't be blank" in error_text_arr
     print("Test Passed: Language required field validation works.")
 
-
 def test_missing_code_field_validation(login_user):
     navigation_page = login_user['navigation_page']
     new_code_snippet_page = login_user['new_code_snippet']
@@ -489,5 +484,59 @@ def test_missing_code_field_validation(login_user):
     assert "Code can't be blank" in error_text_arr
     print("Test Passed: Code required field validation works.")
 
+def test_public_code_snippet_visible_to_guests(setUp):
+
+    navigation_page: Navigation_Bar_Page = setUp['navigation_page']
+    code_snippet_card :Code_Snippet_Card_Page = setUp['code_snippet_card']
+    time.sleep(1)
+    navigation_page.click_code_snippets_link()
+    titles = code_snippet_card.get_titles_from_code_snippet_cards()
+    assert len(titles) > 0, "Expected at least one snippet car, but found none"
+    print("Test Pass: The guest user can view the card snippets.")
     
+def test_public_code_snippet_details_page_visbility_to_guests(setUp):
+    driver = setUp["driver"]
+    navigation_page: Navigation_Bar_Page = setUp['navigation_page']
+    code_snippet_card :Code_Snippet_Card_Page = setUp['code_snippet_card']
+    
+    navigation_page.click_code_snippets_link()
+    titles = code_snippet_card.get_titles_from_code_snippet_cards()
+    expected_result = driver.execute_script("return arguments[0].textContent;", titles[data["CodeSnippetCard"]["Number"]]).strip()
+    code_snippet_card.click_view_Link(data["CodeSnippetCard"]["Number"])
+    
+    actual_result = code_snippet_card.get_title_in_code_snippet_details_page().strip()
+    assert actual_result == expected_result, f"Expected title '{expected_result}', but got '{actual_result}'"
+    
+def test_redirection_to_code_snippets_from_details(setUp):
+    navigation_page: Navigation_Bar_Page = setUp['navigation_page']
+    code_snippet_card :Code_Snippet_Card_Page = setUp['code_snippet_card']
+    
+    navigation_page.click_code_snippets_link()
+    code_snippet_card.click_view_Link(data["CodeSnippetCard"]["Number"])
+    code_snippet_card.click_Back_to_Code_SNippets_link()
+    expected_result = "Code Snippets"
+    actual_result = code_snippet_card.get_main_page_title().strip()
+    assert actual_result == expected_result, f"Expected title '{expected_result}', but got '{actual_result}'"
+
+def test_guest_user_should_login_before_editing_code_snippet(setUp):
+    code_snippet_card :Code_Snippet_Card_Page = setUp['code_snippet_card']
+    login_page : Login_Page = setUp['login_page']
+    expected_result = "You need to sign in or sign up before continuing."
+    
+    code_snippet_card.click_view_Link(data["CodeSnippetCard"]["Number"])
+    code_snippet_card.click_Edit_btn()
+    actual_result = login_page.get_login_validation_error_msg()
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Guest user is redirected to login when trying to create a new code snippet.")
+    
+def test_guest_user_should_login_before_deleting_code_snippet(setUp):
+    code_snippet_card :Code_Snippet_Card_Page = setUp['code_snippet_card']
+    login_page : Login_Page = setUp['login_page']
+    expected_result = "You need to sign in or sign up before continuing."
+    
+    code_snippet_card.click_view_Link(data["CodeSnippetCard"]["Number"])
+    code_snippet_card.click_Delete_btn()
+    actual_result = login_page.get_login_validation_error_msg()
+    assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
+    print("Test Passed: Guest user is redirected to login when trying to create a new code snippet.")
     

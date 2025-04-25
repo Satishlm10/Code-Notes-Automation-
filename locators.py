@@ -4,7 +4,8 @@ class Locators:
     
     # code snippet cards
     SNIPPET_CARDS = (By.CSS_SELECTOR,'div.bg-white.shadow-md.rounded-lg.overflow-hidden.border.border-gray-200')
-    VIEW_LINKS = (By.XPATH,'(//a[contains(text(), "View")])[1]')
+    SNIPPET_CARDS_TITLE = (By.CSS_SELECTOR,'div.bg-white.shadow-md.rounded-lg div.px-6.py-4 > div.font-bold.text-xl.mb-2')
+    VIEW_LINKS = (By.XPATH,'(//a[contains(text(), "View")])')
     EDIT_LINKS = (By.XPATH,'//a[contains(text(),"Edit")]')
     DELETE_LINKS = (By.XPATH,'//a[contains(text(),"Delete")]')
     SNIPPET_CREATOR = (By.CSS_SELECTOR,'span.text-gray-500.text-xs')
@@ -82,4 +83,12 @@ class Locators:
     
     # create, edit code snippet
     FORM_TITLE = (By.XPATH,'//h1[contains(text(),"New Code Snippet")]')
+    
+    
+    # code snippet details page
+    H1_TITLE = (By.CSS_SELECTOR,'h1.font-bold.text-3xl')
+    BACK_CODE_SNIPPET = (By.CSS_SELECTOR,'div.mb-6 > a.text-blue-500')
+    H1_MAIN_PAGE_TITLE = (By.CSS_SELECTOR,'h1.font-bold.text-4xl')
+    DETAILS_EDIT_BTN = (By.CSS_SELECTOR,'a.bg-yellow-500.font-bold')
+    DETAILS_DELETE_BTN = (By.CSS_SELECTOR,'form > input.bg-red-500[value="Delete"]')
     

@@ -12,6 +12,11 @@
         "symbol_password":"!@#$%^&",
         "lessthansix_password":"aA@12"
     },
+
+    "CodeSnippetCard":{
+        "Number": 1
+    },
+
     "snippets": {
         "JavaScript": {
             "title": "My First Code Snippet",
