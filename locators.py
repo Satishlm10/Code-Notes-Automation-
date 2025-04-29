@@ -82,7 +82,7 @@ class Locators:
     VALID_RESET_MSG = (By.XPATH,'//input[@id="user_email"]/following-sibling::p[1]')
     
     # create, edit code snippet
-    FORM_TITLE = (By.XPATH,'//h1[contains(text(),"New Code Snippet")]')
+    FORM_TITLE = (By.CSS_SELECTOR,'h1.font-bold.text-3xl')
     
     
     # code snippet details page
@@ -92,3 +92,6 @@ class Locators:
     DETAILS_EDIT_BTN = (By.CSS_SELECTOR,'a.bg-yellow-500.font-bold')
     DETAILS_DELETE_BTN = (By.CSS_SELECTOR,'form > input.bg-red-500[value="Delete"]')
     
+    # My dashboard locators
+    EDIT_ICON = (By.CSS_SELECTOR,'a.text-gray-400.hover\:text-gray-600')
+    DELETE_ICON = (By.CSS_SELECTOR,'form > button[type="submit"]')

@@ -540,3 +540,36 @@ def test_guest_user_should_login_before_deleting_code_snippet(setUp):
     assert actual_result == expected_result, f"Expected '{expected_result}', but got '{actual_result}'"
     print("Test Passed: Guest user is redirected to login when trying to create a new code snippet.")
     
+def test_logged_in_user_can_edit_their_code_snippet(login_user):
+    navigation_page = login_user['navigation_page']
+    my_dashboard = login_user['my_dashboard']
+    new_code_snippet = login_user['new_code_snippet']
+    
+    navigation_page.click_my_dashboard_link()
+    my_dashboard.click_edit_icon(0)
+    
+    expected_result = "Edit Code Snippet"
+    actual_result = new_code_snippet.get_form_title_new_code_snippet()
+    
+    assert actual_result == expected_result, f"Expected title '{expected_result}', but got '{actual_result}'"
+
+def test_logged_in_user_can_delete_their_code_snippet(login_user):
+    navigation_page = login_user['navigation_page']
+    my_dashboard = login_user['my_dashboard']
+    new_code_snippet = login_user['new_code_snippet']
+    driver = login_user['driver']
+    
+    navigation_page.click_my_dashboard_link()
+    time.sleep(2)
+    my_dashboard.click_delete_icon(0)
+    
+    alert = driver.switch_to.alert
+    alert.accept()
+    
+    expected_result = "Code snippet was successfully destroyed."
+    actual_result = new_code_snippet.get_success_message()
+    
+    assert actual_result == expected_result, f"Expected title '{expected_result}', but got '{actual_result}'" 
+    
+    
+    

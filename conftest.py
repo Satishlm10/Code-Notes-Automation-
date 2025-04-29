@@ -27,14 +27,15 @@ from pages.navigation_bar_page import Navigation_Bar_Page
 from pages.code_snippet_card_page import Code_Snippet_Card_Page
 from pages.login_page import Login_Page
 from pages.new_code_snippet_form_page import New_Code_Snippet_Page
+from pages.my_dashboard import My_Dashboard_Page
 
 @pytest.fixture(scope="function")
 def setUp():
-    chrome_options = Options()
-    chrome_options.add_argument("--headless") 
-    driver = webdriver.Chrome(options=chrome_options)
+    # chrome_options = Options()
+    # chrome_options.add_argument("--headless") 
+    # driver = webdriver.Chrome(options=chrome_options)
     
-    # driver = webdriver.Chrome()
+    driver = webdriver.Chrome()
     driver.maximize_window()
     wait = WebDriverWait(driver, 10)
     driver.get("https://ns-code-snippet-9eae23357ebe.herokuapp.com/")
@@ -45,6 +46,7 @@ def setUp():
     code_snippet_card = Code_Snippet_Card_Page(driver)
     login_page = Login_Page(driver)
     new_code_snippet = New_Code_Snippet_Page(driver)
+    my_dashboard = My_Dashboard_Page(driver)
     
 
     yield {
@@ -54,7 +56,8 @@ def setUp():
         "navigation_page": navigation_page,
         "code_snippet_card": code_snippet_card,
         "login_page": login_page,
-        "new_code_snippet": new_code_snippet
+        "new_code_snippet": new_code_snippet,
+        "my_dashboard": my_dashboard
     }
     
     driver.quit()
@@ -64,6 +67,9 @@ def login_user(setUp):
     login_page = setUp['login_page']
     navigation_page = setUp['navigation_page']
     new_code_snippet = setUp['new_code_snippet']
+    my_dashboard = setUp['my_dashboard']
+    driver = setUp['driver']
+    
     
     email = data["valid_user_signup"]["email"]
     password = data["valid_user_signup"]["password"]
