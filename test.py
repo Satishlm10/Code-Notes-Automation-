@@ -560,7 +560,6 @@ def test_logged_in_user_can_delete_their_code_snippet(login_user):
     driver = login_user['driver']
     
     navigation_page.click_my_dashboard_link()
-    time.sleep(2)
     my_dashboard.click_delete_icon(0)
     
     alert = driver.switch_to.alert
