@@ -93,5 +93,11 @@ class Locators:
     DETAILS_DELETE_BTN = (By.CSS_SELECTOR,'form > input.bg-red-500[value="Delete"]')
     
     # My dashboard locators
-    EDIT_ICON = (By.CSS_SELECTOR,'a.text-gray-400.hover\:text-gray-600')
+    EDIT_ICON = (By.CSS_SELECTOR,'a.text-gray-400.hover\\:text-gray-600')
     DELETE_ICON = (By.CSS_SELECTOR,'form > button[type="submit"]')
+    SEARCH_BAR = (By.CSS_SELECTOR,'input[placeholder="Search snippets..."]')
+    SEARCH_FORM = (By.CSS_SELECTOR,'form[action="/dashboard"]')
+    LANGUAGE_SELECT = (By.CSS_SELECTOR,'select[id=language]')
+    SORT_SNIPPETS = (By.CSS_SELECTOR,'select[id="sort"]')
+    APPLY_BTN = (By.CSS_SELECTOR,'input[type="submit"]')
+    TITLES_IN_CODE_SNIPPET_MY_DASHBOARD = (By.CSS_SELECTOR,'h3 > a.hover\\:text-blue-600')

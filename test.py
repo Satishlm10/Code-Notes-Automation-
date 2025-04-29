@@ -570,5 +570,23 @@ def test_logged_in_user_can_delete_their_code_snippet(login_user):
     
     assert actual_result == expected_result, f"Expected title '{expected_result}', but got '{actual_result}'" 
     
+def test_search_with_full_title_name(login_user):
+    navigation_page = login_user['navigation_page']
+    my_dashboard = login_user['my_dashboard']
+    driver = login_user['driver']
+
+    title = data["CodeSnippetCard"]["title"]
+    navigation_page.click_my_dashboard_link()
+    my_dashboard.enter_title_in_search_bar(title)
+    time.sleep(2)
+    my_dashboard.click_apply_btn()
+    
+    expected_result = title
+    titles = my_dashboard.get_title_in_code_snippet_details_page()
+    
+    for title_actual in titles:
+            title_content = driver.execute_script("return arguments[0].textContent;", title_actual)
+            assert title_content == expected_result, f"Expected title '{expected_result}', but got '{title_content}'" 
+
     
     

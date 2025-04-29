@@ -14,7 +14,8 @@
     },
 
     "CodeSnippetCard":{
-        "Number": 1
+        "Number": 1,
+        "title":"test"
     },
 
     "snippets": {
