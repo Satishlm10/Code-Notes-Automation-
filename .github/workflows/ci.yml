@@ -33,7 +33,7 @@ jobs:
 
       # Run the tests using pytest
       - run: |
-          pytest -s test.py --html=report.html
+          pytest test.py
 
       # Optional: Notify when the job has been triggered
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
