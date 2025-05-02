@@ -390,7 +390,7 @@ def test_create_new_code_snippet(login_user):
     
     # Optionally set the snippet as private and select tags
     new_code_snippet_page.toggle_private_checkbox(should_check=True)
-    new_code_snippet_page.select_tag("new")  # Dynamically select the tag
+    new_code_snippet_page.select_tag(data["CodeSnippetCard"]["tags"])  # Dynamically select the tag
     
     # Submit the form to create the snippet
     new_code_snippet_page.click_create_button()
@@ -703,3 +703,40 @@ def test_a_user_cannot_delete_code_snippet_created_by_other_users(login_user):
     actual_result = code_snippet_card.get_permission_denied_msg()
     
     assert actual_result == expected_result, f"Expected title '{expected_result}', but got '{actual_result}'"
+    
+def test_user_can_create_multiple_code_snippet_with_same_title(login_user):
+    # Extracting page objects
+    navigation_page = login_user['navigation_page']
+    new_code_snippet_page = login_user['new_code_snippet']
+    
+    title = data["snippets"]["JavaScript"]["title"]
+    language = data["snippets"]["JavaScript"]["language"]
+    description = data["snippets"]["JavaScript"]["description"]
+    code = data["snippets"]["JavaScript"]["code"]
+
+    navigation_page.click_code_snippets_link()
+    new_code_snippet_page.click_new_code_snippet_link()
+    
+    # Fill the form with data
+    new_code_snippet_page.input_title(title)
+    new_code_snippet_page.select_language(language)
+    new_code_snippet_page.input_description(description)
+    new_code_snippet_page.input_code(code)
+    new_code_snippet_page.toggle_private_checkbox(should_check=True)
+    new_code_snippet_page.select_tag(data["CodeSnippetCard"]["tags"])  
+    new_code_snippet_page.click_create_button()
+    
+    navigation_page.click_code_snippets_link()
+    new_code_snippet_page.click_new_code_snippet_link()
+    
+    new_code_snippet_page.input_title(title)
+    new_code_snippet_page.select_language(language)
+    new_code_snippet_page.input_description(description)
+    new_code_snippet_page.input_code(code)
+    new_code_snippet_page.toggle_private_checkbox(should_check=True)
+    new_code_snippet_page.select_tag(data["CodeSnippetCard"]["tags"])  
+    new_code_snippet_page.click_create_button()
+
+    success_message = "Code snippet was successfully created."  # Modify this with actual page assertion after creation
+    assert success_message in new_code_snippet_page.get_success_message(), f"Expected success message, but got different result."
+    
