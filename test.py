@@ -745,11 +745,20 @@ def test_guest_user_can_view_tags_page(setUp):
     navigation_page : Navigation_Bar_Page = setUp['navigation_page']
     tag_page : Tags_Page = setUp['tags_page']
     
-    time.sleep(2)
+
     navigation_page.click_Tags_link()
+    time.sleep(2)
     actual_result = tag_page.get_h1_title_of_tags_page()
     
     expected_result = "Tags"  
     assert expected_result == actual_result, f"Expected success message, but got different result."
+    
+# def test_only_logged_in_users_can_create_new_tags(setUp):
+#     navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+#     tag_page : Tags_Page = setUp['tags_page']
+    
+
+#     navigation_page.click_Tags_link()
+#     time.sleep(5)
     
     
