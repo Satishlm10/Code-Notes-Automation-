@@ -801,3 +801,21 @@ def test_only_logged_in_users_can_edit_tags(setUp):
         assert expected_result == actual_result, f"Expected success message, but got different result."
     except TimeoutException as e:
         pytest.fail("The permission denied msg is not found because the guest user is allowed to edit new tag.")
+        
+def test_only_logged_in_users_can_delete_tags(setUp):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    tag_page : Tags_Page = setUp['tags_page']
+    code_snippet_card : Code_Snippet_Card_Page = setUp['code_snippet_card']
+    
+
+    navigation_page.click_Tags_link()
+    time.sleep(2)
+    tag_page.click_delete_tag_link(data["tags"]["tag_name"])
+    
+    expected_result = data["errors"]["not_logged_in_error"]
+    
+    try:
+        actual_result = code_snippet_card.get_permission_denied_msg()
+        assert expected_result == actual_result, f"Expected success message, but got different result."
+    except TimeoutException as e:
+        pytest.fail("The permission denied msg is not found because the guest user is allowed to edit new tag.")
