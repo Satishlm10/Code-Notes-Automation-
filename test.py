@@ -3,6 +3,7 @@ import pytest
 from pages.signup_page import SignUp_Page
 from pages.navigation_bar_page import Navigation_Bar_Page
 from pages.code_snippet_card_page import Code_Snippet_Card_Page
+from pages.tags_page import Tags_Page
 from pages.login_page import Login_Page
 from pages.new_code_snippet_form_page import New_Code_Snippet_Page
 from selenium.common.exceptions import TimeoutException
@@ -739,4 +740,16 @@ def test_user_can_create_multiple_code_snippet_with_same_title(login_user):
 
     success_message = "Code snippet was successfully created."  # Modify this with actual page assertion after creation
     assert success_message in new_code_snippet_page.get_success_message(), f"Expected success message, but got different result."
+    
+def test_guest_user_can_view_tags_page(setUp):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    tag_page : Tags_Page = setUp['tags_page']
+    
+    time.sleep(2)
+    navigation_page.click_Tags_link()
+    actual_result = tag_page.get_h1_title_of_tags_page()
+    
+    expected_result = "Tags"  # Modify this with actual page assertion after creation
+    assert expected_result == actual_result, f"Expected success message, but got different result."
+    
     

@@ -28,6 +28,7 @@ from pages.code_snippet_card_page import Code_Snippet_Card_Page
 from pages.login_page import Login_Page
 from pages.new_code_snippet_form_page import New_Code_Snippet_Page
 from pages.my_dashboard import My_Dashboard_Page
+from pages.tags_page import Tags_Page
 
 @pytest.fixture(scope="function")
 def setUp():
@@ -47,7 +48,7 @@ def setUp():
     login_page = Login_Page(driver)
     new_code_snippet = New_Code_Snippet_Page(driver)
     my_dashboard = My_Dashboard_Page(driver)
-    
+    tags_page = Tags_Page(driver)
 
     yield {
         "driver": driver,
@@ -57,7 +58,8 @@ def setUp():
         "code_snippet_card": code_snippet_card,
         "login_page": login_page,
         "new_code_snippet": new_code_snippet,
-        "my_dashboard": my_dashboard
+        "my_dashboard": my_dashboard,
+        "tags_page":tags_page
     }
     
     driver.quit()

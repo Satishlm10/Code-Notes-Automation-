@@ -25,6 +25,10 @@ class Navigation_Bar_Page:
         code_snippets_link = self.wait.until(EC.presence_of_element_located(Locators.CODE_SNIPPETS))
         self.driver.execute_script('arguments[0].click();', code_snippets_link)
         
+    def click_Tags_link(self):
+        tags_link = self.wait.until(EC.presence_of_element_located(Locators.TAGS))
+        self.driver.execute_script('arguments[0].click();', tags_link)
+        
     def click_my_dashboard_link(self):
         my_dashboard = self.wait.until(EC.presence_of_element_located(Locators.MY_DASHBOARD))
         self.driver.execute_script('arguments[0].click();', my_dashboard)

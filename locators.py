@@ -102,3 +102,6 @@ class Locators:
     SORT_SNIPPETS = (By.CSS_SELECTOR,'select[id="sort"]')
     APPLY_BTN = (By.CSS_SELECTOR,'input[type="submit"]')
     TITLES_IN_CODE_SNIPPET_MY_DASHBOARD = (By.CSS_SELECTOR,'h3 > a.hover\\:text-blue-600')
+    
+    # Tags Page
+    TAG_PAGE_TITLE = (By.CSS_SELECTOR,'h1.font-bold.text-4xl')
