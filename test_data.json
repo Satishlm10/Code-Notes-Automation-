@@ -15,7 +15,12 @@
 
     "CodeSnippetCard":{
         "Number": 1,
-        "title":"test"
+        "title":"My First Code Snippet",
+        "partial_title":"My First",
+        "description":"A simple JavaScript function",
+        "tags":"Tags",
+        "snippet_with_tag_title":"Code snippet with tags",
+        "code_content":"system"
     },
 
     "snippets": {

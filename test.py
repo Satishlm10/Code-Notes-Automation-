@@ -585,8 +585,95 @@ def test_search_with_full_title_name(login_user):
     titles = my_dashboard.get_title_in_code_snippet_details_page()
     
     for title_actual in titles:
-            title_content = driver.execute_script("return arguments[0].textContent;", title_actual)
-            assert title_content == expected_result, f"Expected title '{expected_result}', but got '{title_content}'" 
+        title_content = driver.execute_script("return arguments[0].textContent;", title_actual)
+        assert title_content == expected_result, f"Expected title '{expected_result}', but got '{title_content}'" 
 
+def test_search_with_partial_title_name(login_user):
+    navigation_page = login_user['navigation_page']
+    my_dashboard = login_user['my_dashboard']
+    driver = login_user['driver']
+
+    title = data["CodeSnippetCard"]["partial_title"]
+    navigation_page.click_my_dashboard_link()
+    my_dashboard.enter_title_in_search_bar(title)
+    time.sleep(2)
+    my_dashboard.click_apply_btn()
     
+    expected_result = data["CodeSnippetCard"]["title"]
+    titles = my_dashboard.get_title_in_code_snippet_details_page()
     
+    for title_actual in titles:
+        title_content = driver.execute_script("return arguments[0].textContent;", title_actual)
+        assert title_content == expected_result, f"Expected title '{expected_result}', but got '{title_content}'" 
+
+def test_search_with_code_snippet_description(login_user):
+    navigation_page = login_user['navigation_page']
+    my_dashboard = login_user['my_dashboard']
+    driver = login_user['driver']
+
+    title = data["CodeSnippetCard"]["description"]
+    navigation_page.click_my_dashboard_link()
+    my_dashboard.enter_title_in_search_bar(title)
+    time.sleep(2)
+    my_dashboard.click_apply_btn()
+    
+    expected_result = data["CodeSnippetCard"]["title"]
+    titles = my_dashboard.get_title_in_code_snippet_details_page()
+    
+    for title_actual in titles:
+        title_content = driver.execute_script("return arguments[0].textContent;", title_actual)
+        assert title_content == expected_result, f"Expected title '{expected_result}', but got '{title_content}'" 
+        
+def test_search_with_code_snippet_description(login_user):
+    navigation_page = login_user['navigation_page']
+    my_dashboard = login_user['my_dashboard']
+    driver = login_user['driver']
+
+    title = data["CodeSnippetCard"]["description"]
+    navigation_page.click_my_dashboard_link()
+    my_dashboard.enter_title_in_search_bar(title)
+    time.sleep(2)
+    my_dashboard.click_apply_btn()
+    
+    expected_result = data["CodeSnippetCard"]["title"]
+    titles = my_dashboard.get_title_in_code_snippet_details_page()
+    
+    for title_actual in titles:
+        title_content = driver.execute_script("return arguments[0].textContent;", title_actual)
+        assert title_content == expected_result, f"Expected title '{expected_result}', but got '{title_content}'" 
+        
+def test_search_with_code_snippet_custom_tags(login_user):
+    navigation_page = login_user['navigation_page']
+    my_dashboard = login_user['my_dashboard']
+    driver = login_user['driver']
+
+    title = data["CodeSnippetCard"]["tags"]
+    navigation_page.click_my_dashboard_link()
+    my_dashboard.enter_title_in_search_bar(title)
+    time.sleep(2)
+    my_dashboard.click_apply_btn()
+    
+    expected_result = data["CodeSnippetCard"]["snippet_with_tag_title"]
+    titles = my_dashboard.get_title_in_code_snippet_details_page()
+    
+    for title_actual in titles:
+        title_content = driver.execute_script("return arguments[0].textContent;", title_actual)
+        assert title_content == expected_result, f"Expected title '{expected_result}', but got '{title_content}'" 
+        
+def test_search_with_code_snippet_code_content(login_user):
+    navigation_page = login_user['navigation_page']
+    my_dashboard = login_user['my_dashboard']
+    driver = login_user['driver']
+
+    title = data["CodeSnippetCard"]["code_content"]
+    navigation_page.click_my_dashboard_link()
+    my_dashboard.enter_title_in_search_bar(title)
+    time.sleep(2)
+    my_dashboard.click_apply_btn()
+    
+    expected_result = data["CodeSnippetCard"]["snippet_with_tag_title"]
+    titles = my_dashboard.get_title_in_code_snippet_details_page()
+    
+    for title_actual in titles:
+        title_content = driver.execute_script("return arguments[0].textContent;", title_actual)
+        assert title_content == expected_result, f"Expected title '{expected_result}', but got '{title_content}'" 
