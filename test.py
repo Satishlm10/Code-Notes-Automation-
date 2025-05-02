@@ -753,12 +753,22 @@ def test_guest_user_can_view_tags_page(setUp):
     expected_result = "Tags"  
     assert expected_result == actual_result, f"Expected success message, but got different result."
     
-# def test_only_logged_in_users_can_create_new_tags(setUp):
-#     navigation_page : Navigation_Bar_Page = setUp['navigation_page']
-#     tag_page : Tags_Page = setUp['tags_page']
+def test_only_logged_in_users_can_create_new_tags(setUp):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    tag_page : Tags_Page = setUp['tags_page']
+    code_snippet_card : Code_Snippet_Card_Page = setUp['code_snippet_card']
     
 
-#     navigation_page.click_Tags_link()
-#     time.sleep(5)
+    navigation_page.click_Tags_link()
+    time.sleep(2)
+    tag_page.click_new_tag_btn()
     
+    expected_result = data["errors"]["not_logged_in_error"]
+    
+    try:
+        actual_result = code_snippet_card.get_permission_denied_msg()
+        assert expected_result == actual_result, f"Expected success message, but got different result."
+    except TimeoutException as e:
+        pytest.fail("The permission denied msg is not found because the guest user is allowed to create new tag.")
+
     

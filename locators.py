@@ -105,3 +105,4 @@ class Locators:
     
     # Tags Page
     TAG_PAGE_TITLE = (By.CSS_SELECTOR,'h1.font-bold.text-4xl')
+    NEW_TAG_BTN = (By.CSS_SELECTOR,'div > a.bg-blue-500.text-white.font-bold')

@@ -12,6 +12,10 @@ class Tags_Page:
         title = self.wait.until(EC.presence_of_element_located(Locators.TAG_PAGE_TITLE))
         text = self.driver.execute_script("return arguments[0].textContent",title)
         return text
+    
+    def click_new_tag_btn(self):
+        new_tag_btn = self.wait.until(EC.presence_of_element_located(Locators.NEW_TAG_BTN))
+        self.driver.execute_script('arguments[0].click();', new_tag_btn)
 
 
 

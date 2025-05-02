@@ -25,7 +25,8 @@
 
     "errors":{
         "edit_permission_error":"You do not have permission to modify this snippet.",
-        "delete_permission_error":"You do not have permission to delete this snippet."
+        "delete_permission_error":"You do not have permission to delete this snippet.",
+        "not_logged_in_error":"You need to sign in or sign up before continuing."
     },
 
     "snippets": {
