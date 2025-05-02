@@ -771,4 +771,16 @@ def test_only_logged_in_users_can_create_new_tags(setUp):
     except TimeoutException as e:
         pytest.fail("The permission denied msg is not found because the guest user is allowed to create new tag.")
 
+def test_user_can_view_code_snippets_filtered_by_tags(setUp):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    tag_page : Tags_Page = setUp['tags_page']
+    
+    navigation_page.click_Tags_link()
+    time.sleep(2)
+    tag_page.click_view_tag_link(data["tags"]["tag_name"])
+    time.sleep(2)
+    actual_result = tag_page.get_h1_title_of_tags_page()
+    expected_result = "Tag: Edited Tagg"
+    
+    assert expected_result == actual_result, f"Expected success message, but got different result."
     

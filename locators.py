@@ -104,5 +104,9 @@ class Locators:
     TITLES_IN_CODE_SNIPPET_MY_DASHBOARD = (By.CSS_SELECTOR,'h3 > a.hover\\:text-blue-600')
     
     # Tags Page
-    TAG_PAGE_TITLE = (By.CSS_SELECTOR,'h1.font-bold.text-4xl')
+    TAG_PAGE_TITLE = (By.CSS_SELECTOR,'h1.font-bold')
+    TAG_TD_BLOCK = (By.CSS_SELECTOR,'tr')
     NEW_TAG_BTN = (By.CSS_SELECTOR,'div > a.bg-blue-500.text-white.font-bold')
+    VIEW_TAGS = (By.CSS_SELECTOR,'tr > td > a.text-blue-500')
+    EDIT_TAGS = (By.CSS_SELECTOR,'tr > td > a.text-yellow-500')
+    DELETE_TAGS = (By.CSS_SELECTOR,'input[value="Delete"].text-red-500')

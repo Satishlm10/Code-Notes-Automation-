@@ -29,6 +29,10 @@
         "not_logged_in_error":"You need to sign in or sign up before continuing."
     },
 
+    "tags":{
+        "tag_name":"Edited Tagg"
+    },
+
     "snippets": {
         "JavaScript": {
             "title": "My First Code Snippet",
