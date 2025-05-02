@@ -31,11 +31,11 @@ from pages.my_dashboard import My_Dashboard_Page
 
 @pytest.fixture(scope="function")
 def setUp():
-    chrome_options = Options()
-    chrome_options.add_argument("--headless") 
-    driver = webdriver.Chrome(options=chrome_options)
+    # chrome_options = Options()
+    # chrome_options.add_argument("--headless") 
+    # driver = webdriver.Chrome(options=chrome_options)
     
-    # driver = webdriver.Chrome()
+    driver = webdriver.Chrome()
     driver.maximize_window()
     wait = WebDriverWait(driver, 10)
     driver.get("https://ns-code-snippet-9eae23357ebe.herokuapp.com/")
@@ -64,11 +64,12 @@ def setUp():
     
 @pytest.fixture()
 def login_user(setUp):
+    driver = setUp['driver']
     login_page = setUp['login_page']
     navigation_page = setUp['navigation_page']
     new_code_snippet = setUp['new_code_snippet']
     my_dashboard = setUp['my_dashboard']
-    driver = setUp['driver']
+    code_snippet_card = setUp['code_snippet_card']
     
     
     email = data["valid_user_signup"]["email"]

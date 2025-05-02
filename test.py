@@ -677,3 +677,29 @@ def test_search_with_code_snippet_code_content(login_user):
     for title_actual in titles:
         title_content = driver.execute_script("return arguments[0].textContent;", title_actual)
         assert title_content == expected_result, f"Expected title '{expected_result}', but got '{title_content}'" 
+        
+def test_a_user_cannot_edit_code_snippet_created_by_other_users(login_user):
+    navigation_page = login_user['navigation_page']
+    code_snippet_card = login_user['code_snippet_card']
+    
+    navigation_page.click_code_snippets_link()
+    code_snippet_card.click_view_Link(1)
+    code_snippet_card.click_Edit_btn()
+    
+    expected_result = data["errors"]["edit_permission_error"]
+    actual_result = code_snippet_card.get_permission_denied_msg()
+    
+    assert actual_result == expected_result, f"Expected title '{expected_result}', but got '{actual_result}'" 
+    
+def test_a_user_cannot_delete_code_snippet_created_by_other_users(login_user):
+    navigation_page = login_user['navigation_page']
+    code_snippet_card = login_user['code_snippet_card']
+    
+    navigation_page.click_code_snippets_link()
+    code_snippet_card.click_view_Link(1)
+    code_snippet_card.click_Delete_btn()
+    
+    expected_result = data["errors"]["delete_permission_error"]
+    actual_result = code_snippet_card.get_permission_denied_msg()
+    
+    assert actual_result == expected_result, f"Expected title '{expected_result}', but got '{actual_result}'"

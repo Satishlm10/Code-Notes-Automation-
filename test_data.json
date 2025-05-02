@@ -23,6 +23,11 @@
         "code_content":"system"
     },
 
+    "errors":{
+        "edit_permission_error":"You do not have permission to modify this snippet.",
+        "delete_permission_error":"You do not have permission to delete this snippet."
+    },
+
     "snippets": {
         "JavaScript": {
             "title": "My First Code Snippet",

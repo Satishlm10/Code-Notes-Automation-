@@ -38,3 +38,8 @@ class Code_Snippet_Card_Page:
         delete_btn = self.wait.until(EC.presence_of_element_located(Locators.DETAILS_DELETE_BTN))
         self.driver.execute_script('arguments[0].click();', delete_btn)
         
+    def get_permission_denied_msg(self):
+        error_msg = self.wait.until(EC.presence_of_element_located(Locators.PERMISSION_ERROR))
+        text = self.driver.execute_script('return arguments[0].textContent',error_msg)
+        return text
+        

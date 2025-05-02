@@ -91,6 +91,7 @@ class Locators:
     H1_MAIN_PAGE_TITLE = (By.CSS_SELECTOR,'h1.font-bold.text-4xl')
     DETAILS_EDIT_BTN = (By.CSS_SELECTOR,'a.bg-yellow-500.font-bold')
     DETAILS_DELETE_BTN = (By.CSS_SELECTOR,'form > input.bg-red-500[value="Delete"]')
+    PERMISSION_ERROR = (By.CSS_SELECTOR,'div[role="alert"] > span.block.sm\\:inline')
     
     # My dashboard locators
     EDIT_ICON = (By.CSS_SELECTOR,'a.text-gray-400.hover\\:text-gray-600')
