@@ -749,7 +749,7 @@ def test_guest_user_can_view_tags_page(setUp):
     navigation_page.click_Tags_link()
     actual_result = tag_page.get_h1_title_of_tags_page()
     
-    expected_result = "Tags"  # Modify this with actual page assertion after creation
+    expected_result = "Tags"  
     assert expected_result == actual_result, f"Expected success message, but got different result."
     
     
