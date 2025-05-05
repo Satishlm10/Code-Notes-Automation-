@@ -114,9 +114,10 @@ class Locators:
     # Kanji for Beginners and All Kanji Locators
     SEARCH_KANJI_BTN = (By.CSS_SELECTOR,'input[value="Search"]')
     SEARCH_BAR_KANJI = (By.CSS_SELECTOR,'input[placeholder="Search by kanji or meaning..."]')
+    KANJI_CARD_WORD = (By.CSS_SELECTOR,'a.kanji-card > div.text-sm')
     KANJI_CARD = (By.CSS_SELECTOR,'a.kanji-card')
     
     
     # Kanji details
     KANJI_WORD = (By.CSS_SELECTOR,'div.text-center > div.text-xl')
-    STROKE_ORDER = (By.CSS_SELECTOR,'div > video.max-w-full')
+    STROKE_ORDER = (By.XPATH,'//div[@id="stroke-order-container"]')

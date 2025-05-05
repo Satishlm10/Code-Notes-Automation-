@@ -1,6 +1,9 @@
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators import Locators
+from selenium.common.exceptions import TimeoutException
+
+
 
 class Kanji_Page:
     
@@ -25,6 +28,17 @@ class Kanji_Page:
         text = self.driver.execute_script("return arguments[0].textContent",success_msg)
         return text
 
+    def click_kanji_card(self,cardNumber):
+        # Get all kanji cards and their child word elements
+        kanji_cards = self.wait.until(EC.presence_of_all_elements_located(Locators.KANJI_CARD))
+        self.driver.execute_script('arguments[0].click();', kanji_cards[cardNumber])
 
+    
+    def stroke_order_exists(self):
+        try:
+            self.wait.until(EC.visibility_of_element_located(Locators.STROKE_ORDER))
+            return True
+        except TimeoutException:
+            return False
 
 

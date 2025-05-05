@@ -876,3 +876,13 @@ def test_unavailable_characters_generate_proper_error_msg(setUp):
     expected_result = data["kanji"]["word_not_found"]
     
     assert success_msg == expected_result, f"Expected success message, but got different result."
+
+def test_kanji_char_page_contains_stroke_order(setUp):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    kanji_page : Kanji_Page = setUp['kanji_page']
+    
+    navigation_page.click_All_Kanji_link()
+    kanji_page.click_kanji_card(0)
+    actual_result = kanji_page.stroke_order_exists()
+    
+    assert True == actual_result, f"Stroke order video doesn't exist"
