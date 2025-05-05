@@ -834,3 +834,17 @@ def test_user_can_search_by_kanji(setUp):
     matches = [word for word in kanji_word if word == english_word]
 
     assert matches is not None, f"Word '{english_word}' not found in kanji card words: {kanji_word}"
+    
+def test_search_for_kanji_charcter_with_english_word(setUp):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    kanji_page : Kanji_Page = setUp['kanji_page']
+
+    navigation_page.click_Kanji_for_Beginners_link()
+    
+    kanji_page.enter_kanji_character(data["kanji"]["english_word"])
+    kanji_page.click_Search_Btn()
+    
+    english_word = data['kanji']["english_word"]
+    kanji_word = kanji_page.get_word_from_kanji_card()
+    matches = [word for word in kanji_word if word == english_word]
+    assert matches is not None, f"Word '{english_word}' not found in kanji card words: {kanji_word}"
