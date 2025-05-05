@@ -19,6 +19,11 @@ class Kanji_Page:
     def get_word_from_kanji_card(self):
         kanji_card_word = self.wait.until(EC.presence_of_all_elements_located(Locators.KANJI_CARD))
         return kanji_card_word
+    
+    def get_kanji_fetch_success_msg(self):
+        success_msg = self.wait.until(EC.presence_of_element_located(Locators.SUCCESS_MSG))
+        text = self.driver.execute_script("return arguments[0].textContent",success_msg)
+        return text
 
 
 

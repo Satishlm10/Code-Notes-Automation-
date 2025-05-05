@@ -848,3 +848,17 @@ def test_search_for_kanji_charcter_with_english_word(setUp):
     kanji_word = kanji_page.get_word_from_kanji_card()
     matches = [word for word in kanji_word if word == english_word]
     assert matches is not None, f"Word '{english_word}' not found in kanji card words: {kanji_word}"
+    
+def test_new_kanji_characters_are_fetched_from_kanjiAlive(setUp):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    kanji_page : Kanji_Page = setUp['kanji_page']
+
+    navigation_page.click_Kanji_for_Beginners_link()
+    
+    kanji_page.enter_kanji_character(data["kanji"]["new_english_word_search"])
+    kanji_page.click_Search_Btn()
+    success_msg = kanji_page.get_kanji_fetch_success_msg()
+    
+    expected_result = data["kanji"]["new_kanji_added_success_msg"]
+    
+    assert success_msg.startswith(expected_result), f"Unexpected success message: {success_msg}"

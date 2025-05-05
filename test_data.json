@@ -129,6 +129,7 @@
     "kanji":{
             "kanji_word":"女",
             "english_word":"woman",
-            "new_kanji_added_success_msg":"Found and added 1 kanji from KanjiAlive API:"
+            "new_kanji_added_success_msg":"Found and added",
+            "new_english_word_search":"valley"
     }
 }
