@@ -124,5 +124,10 @@
             "description": "A custom code snippet",
             "code": "// Custom code"
         }
+    },
+
+    "kanji":{
+            "kanji_word":"女",
+            "english_word":"woman"
     }
 }

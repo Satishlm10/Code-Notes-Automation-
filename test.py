@@ -5,6 +5,7 @@ from pages.navigation_bar_page import Navigation_Bar_Page
 from pages.code_snippet_card_page import Code_Snippet_Card_Page
 from pages.tags_page import Tags_Page
 from pages.login_page import Login_Page
+from pages.Kanji import Kanji_Page
 from pages.new_code_snippet_form_page import New_Code_Snippet_Page
 from selenium.common.exceptions import TimeoutException
 import json
@@ -819,3 +820,17 @@ def test_only_logged_in_users_can_delete_tags(setUp):
         assert expected_result == actual_result, f"Expected success message, but got different result."
     except TimeoutException as e:
         pytest.fail("The permission denied msg is not found because the guest user is allowed to edit new tag.")
+        
+def test_user_can_search_by_kanji(setUp):
+    navigation_page : Navigation_Bar_Page = setUp['navigation_page']
+    kanji_page : Kanji_Page = setUp['kanji_page']
+    
+    navigation_page.click_Kanji_for_Beginners_link()
+    kanji_page.enter_kanji_character(data["kanji"]["kanji_word"])
+    kanji_page.click_Search_Btn()
+    english_word = data['kanji']["english_word"]
+    kanji_word = kanji_page.get_word_from_kanji_card()
+    
+    matches = [word for word in kanji_word if word == english_word]
+
+    assert matches is not None, f"Word '{english_word}' not found in kanji card words: {kanji_word}"

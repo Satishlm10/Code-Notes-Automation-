@@ -110,3 +110,13 @@ class Locators:
     VIEW_TAGS = (By.CSS_SELECTOR,'tr > td > a.text-blue-500')
     EDIT_TAGS = (By.CSS_SELECTOR,'tr > td > a.text-yellow-500')
     DELETE_TAGS = (By.CSS_SELECTOR,'input[value="Delete"].text-red-500')
+    
+    # Kanji for Beginners and All Kanji Locators
+    SEARCH_KANJI_BTN = (By.CSS_SELECTOR,'input[value="Search"]')
+    SEARCH_BAR_KANJI = (By.CSS_SELECTOR,'input[placeholder="Search by kanji or meaning..."]')
+    KANJI_CARD = (By.CSS_SELECTOR,'a.kanji-card')
+    
+    
+    # Kanji details
+    KANJI_WORD = (By.CSS_SELECTOR,'div.text-center > div.text-xl')
+    STROKE_ORDER = (By.CSS_SELECTOR,'div > video.max-w-full')

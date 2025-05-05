@@ -29,6 +29,7 @@ from pages.login_page import Login_Page
 from pages.new_code_snippet_form_page import New_Code_Snippet_Page
 from pages.my_dashboard import My_Dashboard_Page
 from pages.tags_page import Tags_Page
+from pages.Kanji import Kanji_Page
 
 @pytest.fixture(scope="function")
 def setUp():
@@ -49,6 +50,7 @@ def setUp():
     new_code_snippet = New_Code_Snippet_Page(driver)
     my_dashboard = My_Dashboard_Page(driver)
     tags_page = Tags_Page(driver)
+    kanji_page = Kanji_Page(driver)
 
     yield {
         "driver": driver,
@@ -59,7 +61,8 @@ def setUp():
         "login_page": login_page,
         "new_code_snippet": new_code_snippet,
         "my_dashboard": my_dashboard,
-        "tags_page":tags_page
+        "tags_page":tags_page,
+        "kanji_page":kanji_page
     }
     
     driver.quit()
@@ -72,6 +75,7 @@ def login_user(setUp):
     new_code_snippet = setUp['new_code_snippet']
     my_dashboard = setUp['my_dashboard']
     code_snippet_card = setUp['code_snippet_card']
+    kanji_page = setUp['kanji_page']
     
     
     email = data["valid_user_signup"]["email"]

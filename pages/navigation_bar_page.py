@@ -32,3 +32,11 @@ class Navigation_Bar_Page:
     def click_my_dashboard_link(self):
         my_dashboard = self.wait.until(EC.presence_of_element_located(Locators.MY_DASHBOARD))
         self.driver.execute_script('arguments[0].click();', my_dashboard)
+    
+    def click_Kanji_for_Beginners_link(self):
+        kanji_link = self.wait.until(EC.presence_of_element_located(Locators.KANJI_FOR_BEGINEERS))
+        self.driver.execute_script('arguments[0].click();', kanji_link)
+        
+    def click_All_Kanji_link(self):
+        kanji_link = self.wait.until(EC.presence_of_element_located(Locators.KANJI_FOR_BEGINEERS))
+        self.driver.execute_script('arguments[0].click();', kanji_link)
