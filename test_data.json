@@ -130,6 +130,8 @@
             "kanji_word":"女",
             "english_word":"woman",
             "new_kanji_added_success_msg":"Found and added",
-            "new_english_word_search":"valley"
+            "new_english_word_search":"valley",
+            "unavailable_word":"something",
+            "word_not_found":"No kanji found matching 'something'"
     }
 }
